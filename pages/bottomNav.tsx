@@ -19,8 +19,18 @@ export default function BottomNav() {
           setValue(newValue);
         }}
       >
-        <BottomNavigationAction label="Map" icon={<MapIcon />} />
-        <BottomNavigationAction label="List" icon={<ViewListIcon />} />
+        <BottomNavigationAction
+          label="Map"
+          icon={<MapIcon />}
+          href="/"
+          LinkComponent={Link}
+        />
+        <BottomNavigationAction
+          label="List"
+          icon={<ViewListIcon />}
+          href="/list"
+          LinkComponent={Link}
+        />
         <BottomNavigationAction label="Add" icon={<LocalFloristIcon />} />
       </BottomNavigation>
     </Box>
