@@ -27,25 +27,38 @@ export default function List() {
       lat: 39.95,
       long: -75.21,
     },
+    {
+      id: 4,
+      genus: "Pieris",
+      species: "japonica",
+      commonName: "Japanese andromeda",
+      lat: 39.95,
+      long: -75.21,
+    },
   ];
 
   const columns: GridColDef[] = [
     { field: "genus", headerName: "Genus" },
     { field: "species", headerName: "Species" },
-    { field: "commonName", headerName: "Common Name" },
+    { field: "commonName", headerName: "Common Name", flex: 1 },
     { field: "lat", headerName: "Latitude" },
     { field: "long", headerName: "Longitude" },
   ];
 
   return (
     <Box
-      justifyContent="center"
       display="flex"
-      height={300}
-      width={500}
-      alignItems="center"
+      height={500}
+      width={600}
+      margin="auto"
+      color="antiquewhite"
+      padding={2}
     >
-      <DataGrid rows={rows} columns={columns} />
+      <DataGrid
+        rows={rows}
+        columns={columns}
+        sx={{ borderColor: "antiquewhite" }}
+      />
     </Box>
   );
 }
