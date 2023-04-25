@@ -6,11 +6,19 @@ import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import MapIcon from "@mui/icons-material/Map";
 import Link from "next/link";
-import List from "./list";
-import { styled } from "@mui/material/styles";
+import Add from "./add";
 
 export default function BottomNav() {
   const [value, setValue] = React.useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <Box display="flex" justifyContent="center">
@@ -20,7 +28,7 @@ export default function BottomNav() {
         sx={{
           bgcolor: "antiquewhite",
           borderRadius: 12,
-          "& .Mui-selected": {
+          "& .Mui-selected, .Mui-selected > svg": {
             color: "#869386",
           },
         }}
@@ -40,8 +48,13 @@ export default function BottomNav() {
           href="/list"
           LinkComponent={Link}
         />
-        <BottomNavigationAction label="Add" icon={<LocalFloristIcon />} />
+        <BottomNavigationAction
+          label="Add"
+          icon={<LocalFloristIcon />}
+          onClick={handleClickOpen}
+        />
       </BottomNavigation>
+      <Add handleClose={handleClose} open={open} />
     </Box>
   );
 }
