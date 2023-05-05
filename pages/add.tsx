@@ -18,7 +18,7 @@ export default function Add(props: MyProps) {
       open={open}
       onClose={handleClose}
       sx={{
-        "& .MuiPaper-root": { background: "antiquewhite" },
+        "& .MuiDialog-paper": { bgcolor: "antiquewhite" },
       }}
     >
       <DialogTitle>Add entry</DialogTitle>

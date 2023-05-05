@@ -1,6 +1,6 @@
 body {
   background-color: rgb(145, 160, 145);
-  font-family: Georgia, 'Times New Roman', Times, serif;
+  font-family: Georgia, "Times New Roman", Times, serif;
   margin-top: 3rem;
   margin-bottom: 3rem;
   margin-left: 10%;
@@ -32,7 +32,7 @@ nav li {
 
 nav li:hover {
   background-color: rgb(87, 97, 87);
-  border: 5px solid  rgb(87, 97, 87);
+  border: 5px solid rgb(87, 97, 87);
 }
 
 h1 {
@@ -41,7 +41,6 @@ h1 {
 }
 
 h2 {
-  color: antiquewhite;
   text-align: center;
 }
 

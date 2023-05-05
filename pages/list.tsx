@@ -1,41 +1,8 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
 
-export default function List() {
-  const rows: GridRowsProp = [
-    {
-      id: 1,
-      genus: "Galanthus",
-      species: "nivalis",
-      commonName: "snowdrop",
-      lat: 39.95,
-      long: -75.21,
-    },
-    {
-      id: 2,
-      genus: "Crocus",
-      species: "sativus",
-      commonName: "crocus",
-      lat: 39.95,
-      long: -75.21,
-    },
-    {
-      id: 3,
-      genus: "Helleborus",
-      species: null,
-      commonName: "lenten rose",
-      lat: 39.95,
-      long: -75.21,
-    },
-    {
-      id: 4,
-      genus: "Pieris",
-      species: "japonica",
-      commonName: "Japanese andromeda",
-      lat: 39.95,
-      long: -75.21,
-    },
-  ];
+export default function List({ data }: any) {
+  const rows: GridRowsProp = data;
 
   const columns: GridColDef[] = [
     { field: "genus", headerName: "Genus" },
