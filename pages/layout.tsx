@@ -1,8 +1,11 @@
 import Header from "./header";
 import BottomNav from "./bottomNav";
 import { PropsWithChildren } from "react";
+import { PlantEncounter } from "./types";
 
-export default function Layout({ children }: PropsWithChildren) {
+type LayoutPropsWithChildren = PropsWithChildren<{handleAddEncounter: (newEncounter: PlantEncounter) => void}>
+
+export default function Layout({ children, handleAddEncounter }: LayoutPropsWithChildren) {
   return (
     <>
       <Header />

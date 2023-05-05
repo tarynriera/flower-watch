@@ -7,8 +7,13 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import MapIcon from "@mui/icons-material/Map";
 import Link from "next/link";
 import Add from "./add";
+import { PlantEncounter } from "./types";
 
-export default function BottomNav() {
+export interface BottomNavProps {
+  handleAddEncounter: (newEncounter: PlantEncounter) => void
+}
+
+export default function BottomNav({ handleAddEncounter }: BottomNavProps) {
   const [value, setValue] = React.useState(0);
   const [open, setOpen] = React.useState(false);
 
@@ -54,7 +59,7 @@ export default function BottomNav() {
           onClick={handleClickOpen}
         />
       </BottomNavigation>
-      <Add handleClose={handleClose} open={open} />
+      <Add handleClose={handleClose} handleAdd={handleAddEncounter} open={open} />
     </Box>
   );
 }

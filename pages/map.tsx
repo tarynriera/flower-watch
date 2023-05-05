@@ -1,6 +1,11 @@
 import { Box } from "@mui/material";
+import { PlantEncounter } from "./types";
 
-export default function List() {
+export interface MapProps {
+  data: Array<PlantEncounter>
+}
+
+export default function Map({ data }: MapProps) {
   return (
     <Box
       justifyContent="center"

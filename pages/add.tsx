@@ -5,14 +5,19 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import { PlantEncounter } from "./types";
 
 export interface MyProps {
   handleClose: () => void;
   open: boolean;
+  handleAdd: (newEncounter: PlantEncounter) => void;
 }
 
 export default function Add(props: MyProps) {
-  const { handleClose, open } = props;
+  const { handleClose, open, handleAdd } = props;
+  const handleUpload = (newEncounter: PlantEncounter) => { handleAdd(newEncounter),
+      handleClose()
+  }
   return (
     <Dialog
       open={open}
@@ -58,7 +63,7 @@ export default function Add(props: MyProps) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleClose}>Upload</Button>
+        <Button onClick={() => handleUpload}>Upload</Button>
       </DialogActions>
     </Dialog>
   );

@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import { PlantEncounter } from "./types";
 
-export default function List({ data }: any) {
+export interface ListProps {
+  data: Array<PlantEncounter>;
+}
+
+export default function List({ data }: ListProps) {
   const rows: GridRowsProp = data;
 
   const columns: GridColDef[] = [

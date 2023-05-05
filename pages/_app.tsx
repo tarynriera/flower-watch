@@ -1,19 +1,15 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "./layout";
+import { PlantEncounter} from "./types";
 import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [data, setData] = useState<
-    Array<{
-      id: number;
-      genus: string;
-      species: string;
-      commonName: string;
-      lat: number;
-      long: number;
-    }>
-  >([]);
+  const [data, setData] = useState<Array<PlantEncounter>>([]);
+
+  const handleAddEncounter = (newEncounter: PlantEncounter) => {
+    setData([newEncounter, ...data]);
+  };
 
   useEffect(
     () =>
@@ -31,7 +27,7 @@ export default function App({ Component, pageProps }: AppProps) {
   );
 
   return (
-    <Layout>
+    <Layout handleAddEncounter={handleAddEncounter}>
       <Component data={data} {...pageProps} />
     </Layout>
   );
