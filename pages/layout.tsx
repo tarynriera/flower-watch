@@ -10,7 +10,7 @@ export default function Layout({ children, handleAddEncounter }: LayoutPropsWith
     <>
       <Header />
       <main>{children}</main>
-      <BottomNav />
+      <BottomNav handleAddEncounter={handleAddEncounter}/>
     </>
   );
 }

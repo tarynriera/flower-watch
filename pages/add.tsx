@@ -6,6 +6,8 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { PlantEncounter } from "./types";
+import { useState } from "react";
+import hash from 'hash-it';
 
 export interface MyProps {
   handleClose: () => void;
@@ -15,9 +17,8 @@ export interface MyProps {
 
 export default function Add(props: MyProps) {
   const { handleClose, open, handleAdd } = props;
-  const handleUpload = (newEncounter: PlantEncounter) => { handleAdd(newEncounter),
-      handleClose()
-  }
+  const [formData, setFormData] = useState<PlantEncounter>({});
+
   return (
     <Dialog
       open={open}
@@ -39,6 +40,8 @@ export default function Add(props: MyProps) {
           type="text"
           fullWidth
           variant="standard"
+          value={formData.genus ?? ""}
+          onChange={(e) => setFormData({ ...formData, genus: e.target.value })}
           required
         />
         <TextField
@@ -49,6 +52,10 @@ export default function Add(props: MyProps) {
           type="text"
           fullWidth
           variant="standard"
+          value={formData.species ?? ""}
+          onChange={(e) =>
+            setFormData({ ...formData, species: e.target.value })
+          }
         />
         <TextField
           autoFocus
@@ -58,12 +65,24 @@ export default function Add(props: MyProps) {
           type="text"
           fullWidth
           variant="standard"
+          value={formData.commonName ?? ""}
+          onChange={(e) =>
+            setFormData({ ...formData, commonName: e.target.value })
+          }
           required
         />
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={() => handleUpload}>Upload</Button>
+        <Button
+          onClick={() => {
+             const id = hash(formData);
+            handleAdd({...formData, id});
+            handleClose();
+          }}
+        >
+          Upload
+        </Button>
       </DialogActions>
     </Dialog>
   );
