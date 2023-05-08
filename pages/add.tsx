@@ -7,7 +7,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import { PlantEncounter } from "./types";
 import { useState } from "react";
-import hash from 'hash-it';
+import hash from "hash-it";
 
 export interface MyProps {
   handleClose: () => void;
@@ -73,11 +73,18 @@ export default function Add(props: MyProps) {
         />
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleClose}>Cancel</Button>
         <Button
           onClick={() => {
-             const id = hash(formData);
-            handleAdd({...formData, id});
+            setFormData({}), handleClose();
+          }}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={() => {
+            const id = hash(formData);
+            handleAdd({ ...formData, id });
+            setFormData({});
             handleClose();
           }}
         >

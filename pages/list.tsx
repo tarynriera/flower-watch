@@ -1,9 +1,20 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridRowsProp, GridColDef } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridRowsProp,
+  GridColDef,
+  GridActionsCellItem,
+} from "@mui/x-data-grid";
 import { PlantEncounter } from "./types";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 export interface ListProps {
   data: Array<PlantEncounter>;
+}
+
+function placeholderClick() {
+  return;
 }
 
 export default function List({ data }: ListProps) {
@@ -15,7 +26,33 @@ export default function List({ data }: ListProps) {
     { field: "commonName", headerName: "Common Name", flex: 1 },
     { field: "lat", headerName: "Latitude" },
     { field: "long", headerName: "Longitude" },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      cellClassName: "actions",
+      getActions: ({ id }) => {
+        return [
+          <GridActionsCellItem
+            icon={<EditIcon />}
+            label="Edit"
+            onClick={placeholderClick}
+            color="inherit"
+          />,
+          <GridActionsCellItem
+            icon={<DeleteIcon />}
+            label="Delete"
+            onClick={placeholderClick}
+            color="inherit"
+          />,
+        ];
+      },
+    },
   ];
+
+  //const handleDeleteClick = (id: GridRowId) => () => {
+  //setRows(rows.filter((row) => row.id !== id));
+  //};
 
   return (
     <Box
