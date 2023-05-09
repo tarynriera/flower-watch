@@ -4,6 +4,7 @@ import {
   GridRowsProp,
   GridColDef,
   GridActionsCellItem,
+  GridRowId,
 } from "@mui/x-data-grid";
 import { PlantEncounter } from "./types";
 import EditIcon from "@mui/icons-material/Edit";
@@ -11,14 +12,19 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 export interface ListProps {
   data: Array<PlantEncounter>;
+  handleSetData: (data: Array<PlantEncounter>) => void;
 }
 
 function placeholderClick() {
   return;
 }
 
-export default function List({ data }: ListProps) {
+export default function List({ data, handleSetData }: ListProps) {
   const rows: GridRowsProp = data;
+
+  const handleDeleteClick = (id: GridRowId) => () => {
+    handleSetData(data.filter((row) => row.id !== id));
+  };
 
   const columns: GridColDef[] = [
     { field: "genus", headerName: "Genus" },
@@ -42,17 +48,13 @@ export default function List({ data }: ListProps) {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={placeholderClick}
+            onClick={() => handleDeleteClick(id)}
             color="inherit"
           />,
         ];
       },
     },
   ];
-
-  //const handleDeleteClick = (id: GridRowId) => () => {
-  //setRows(rows.filter((row) => row.id !== id));
-  //};
 
   return (
     <Box

@@ -1,7 +1,7 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "./layout";
-import { PlantEncounter} from "./types";
+import { PlantEncounter } from "./types";
 import { useState, useEffect } from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
@@ -9,6 +9,10 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const handleAddEncounter = (newEncounter: PlantEncounter) => {
     setData([newEncounter, ...data]);
+  };
+
+  const handleSetData = (data: PlantEncounter[]) => {
+    setData(data);
   };
 
   useEffect(
@@ -28,7 +32,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <Layout handleAddEncounter={handleAddEncounter}>
-      <Component data={data} {...pageProps} />
+      <Component data={data} handleSetData={handleSetData} {...pageProps} />
     </Layout>
   );
 }
