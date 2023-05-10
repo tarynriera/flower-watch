@@ -48,7 +48,7 @@ export default function List({ data, handleSetData }: ListProps) {
           <GridActionsCellItem
             icon={<DeleteIcon />}
             label="Delete"
-            onClick={() => handleDeleteClick(id)}
+            onClick={handleDeleteClick(id)}
             color="inherit"
           />,
         ];
