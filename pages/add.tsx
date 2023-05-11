@@ -5,9 +5,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import FormHelperText from "@mui/material/FormHelperText";
 import { PlantEncounter } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
+import { clear } from "console";
 
 export interface MyProps {
   handleClose: () => void;
@@ -15,9 +17,39 @@ export interface MyProps {
   handleAdd: (newEncounter: PlantEncounter) => void;
 }
 
+const emptyFormData = {
+  id: undefined,
+  genus: "",
+  species: "",
+  commonName: "",
+  lat: undefined,
+  long: undefined,
+};
+
 export default function Add(props: MyProps) {
   const { handleClose, open, handleAdd } = props;
-  const [formData, setFormData] = useState<PlantEncounter>({});
+  const [formData, setFormData] = useState<PlantEncounter>(emptyFormData);
+  const [genusError, setGenusError] = useState(false);
+  const [commonNameError, setCommonNameError] = useState(false);
+
+  function clearErrors() {
+    setGenusError(false);
+    setCommonNameError(false);
+  }
+
+  function handleSubmit() {
+    if (formData.genus === "") {
+      setGenusError(true);
+    } else if (formData.commonName === "") {
+      setCommonNameError(true);
+    } else {
+      const id = hash(formData);
+      handleAdd({ ...formData, id });
+      setFormData(emptyFormData);
+      clearErrors();
+      handleClose();
+    }
+  }
 
   return (
     <Dialog
@@ -30,7 +62,8 @@ export default function Add(props: MyProps) {
       <DialogTitle>Add entry</DialogTitle>
       <DialogContent>
         <DialogContentText>
-          This is a form for adding an entry.
+          Upload a photo and record the Genus, species (if known), and common
+          name.
         </DialogContentText>
         <TextField
           autoFocus
@@ -43,6 +76,11 @@ export default function Add(props: MyProps) {
           value={formData.genus ?? ""}
           onChange={(e) => setFormData({ ...formData, genus: e.target.value })}
           required
+          error={genusError}
+          FormHelperTextProps={{
+            children: "Genus required",
+            error: genusError,
+          }}
         />
         <TextField
           autoFocus
@@ -70,26 +108,24 @@ export default function Add(props: MyProps) {
             setFormData({ ...formData, commonName: e.target.value })
           }
           required
+          error={commonNameError}
+          FormHelperTextProps={{
+            children: "If common name unknown, use Genus",
+            error: commonNameError,
+          }}
         />
       </DialogContent>
       <DialogActions>
         <Button
           onClick={() => {
-            setFormData({}), handleClose();
+            setFormData(emptyFormData);
+            clearErrors();
+            handleClose();
           }}
         >
           Cancel
         </Button>
-        <Button
-          onClick={() => {
-            const id = hash(formData);
-            handleAdd({ ...formData, id });
-            setFormData({});
-            handleClose();
-          }}
-        >
-          Upload
-        </Button>
+        <Button onClick={() => handleSubmit()}>Upload</Button>
       </DialogActions>
     </Dialog>
   );
