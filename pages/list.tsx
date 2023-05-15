@@ -13,13 +13,18 @@ import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 export interface ListProps {
   data: Array<PlantEncounter>;
   handleSetData: (data: Array<PlantEncounter>) => void;
+  handleEditOpen: () => void;
 }
 
 function placeholderClick() {
   return;
 }
 
-export default function List({ data, handleSetData }: ListProps) {
+export default function List({
+  data,
+  handleSetData,
+  handleEditOpen,
+}: ListProps) {
   const rows: GridRowsProp = data;
 
   const handleDeleteClick = (id: GridRowId) => () => {
@@ -42,7 +47,7 @@ export default function List({ data, handleSetData }: ListProps) {
           <GridActionsCellItem
             icon={<EditIcon />}
             label="Edit"
-            onClick={placeholderClick}
+            onClick={handleEditOpen}
             color="inherit"
           />,
           <GridActionsCellItem
