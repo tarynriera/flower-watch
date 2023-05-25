@@ -15,7 +15,7 @@ const emptyFormData = {
 };
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [data, setData] = useState<Array<PlantEncounter>>([]);
+  const [data, setData] = useState<Map<number, PlantEncounter>>(new Map());
   //open state for the edit form
   const [open, setOpen] = useState(false);
   const [entryToEdit, setEntryToEdit] = useState<PlantEncounter>(emptyFormData);
@@ -27,8 +27,13 @@ export default function App({ Component, pageProps }: AppProps) {
   };
 
   const handleEdit = (updatedEntry: PlantEncounter) => {
-    const newEntry = {...entryToEdit, ...updatedEntry};
-    const newData = [newEntry, ...data.filter((row) => entryToEdit ? row.id !== entryToEdit.id : false)];
+    const newEntry = { ...entryToEdit, ...updatedEntry };
+    const newData = [
+      newEntry,
+      ...data.filter((row) =>
+        entryToEdit ? row.id !== entryToEdit.id : false
+      ),
+    ];
     setData(newData);
   };
 
@@ -38,26 +43,32 @@ export default function App({ Component, pageProps }: AppProps) {
 
   //handlers for adding to data state
   const handleAddEncounter = (newEncounter: PlantEncounter) => {
-    setData([newEncounter, ...data]);
+    data.set(newEncounter.id, newEncounter);
+    setData(data);
   };
 
-  const handleSetData = (data: PlantEncounter[]) => {
+  const handleSetData = (data: Map<number, PlantEncounter>) => {
     setData(data);
   };
 
   //starter data
   useEffect(
     () =>
-      setData([ 
-        {
-          id: 1,
-          genus: "Galanthus",
-          species: "nivalis",
-          commonName: "snowdrop",
-          lat: 39.95,
-          long: -75.21,
-        },
-      ]),
+      setData(
+        new Map([
+          [
+            1,
+            {
+              id: 1,
+              genus: "Galanthus",
+              species: "nivalis",
+              commonName: "snowdrop",
+              lat: 39.95,
+              long: -75.21,
+            },
+          ],
+        ])
+      ),
     []
   );
 

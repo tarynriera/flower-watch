@@ -26,9 +26,10 @@ const emptyFormData = {
 
 export default function Edit(props: EditProps) {
   const { editOpen, handleEditClose } = props;
-  const [ editFormData, setEditFormData ] = useState<PlantEncounter>(emptyFormData);
-  const [ genusError, setGenusError] = useState(false);
-  const [ commonNameError, setCommonNameError] = useState(false);
+  const [editFormData, setEditFormData] =
+    useState<PlantEncounter>(emptyFormData);
+  const [genusError, setGenusError] = useState(false);
+  const [commonNameError, setCommonNameError] = useState(false);
   useEffect(() => setEditFormData(props.entryToEdit), [props.entryToEdit]);
 
   function clearErrors() {
@@ -50,9 +51,6 @@ export default function Edit(props: EditProps) {
       clearErrors();
       handleEditClose();
     }
-
-
-
   };
 
   return (
@@ -76,7 +74,9 @@ export default function Edit(props: EditProps) {
           variant="standard"
           required
           value={editFormData.genus}
-          onChange={(e) => setEditFormData({ ...editFormData, genus: e.target.value })}
+          onChange={(e) =>
+            setEditFormData({ ...editFormData, genus: e.target.value })
+          }
           error={genusError}
           FormHelperTextProps={{
             children: "Genus required",
@@ -92,7 +92,9 @@ export default function Edit(props: EditProps) {
           fullWidth
           variant="standard"
           value={editFormData.species ?? ""}
-          onChange={(e) => setEditFormData({ ...editFormData, species: e.target.value })}
+          onChange={(e) =>
+            setEditFormData({ ...editFormData, species: e.target.value })
+          }
         />
         <TextField
           autoFocus
@@ -104,7 +106,9 @@ export default function Edit(props: EditProps) {
           variant="standard"
           required
           value={editFormData.commonName}
-          onChange={(e) => setEditFormData({ ...editFormData, commonName: e.target.value })}
+          onChange={(e) =>
+            setEditFormData({ ...editFormData, commonName: e.target.value })
+          }
           error={commonNameError}
           FormHelperTextProps={{
             children: "If common name unknown, use Genus",
