@@ -5,7 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import { PlantEncounter } from "./types";
+import { PlantEncounter, emptyPlantData } from "./types";
 import { useState, useEffect } from "react";
 
 export interface EditProps {
@@ -27,7 +27,7 @@ const emptyFormData = {
 export default function Edit(props: EditProps) {
   const { editOpen, handleEditClose } = props;
   const [editFormData, setEditFormData] =
-    useState<PlantEncounter>(emptyFormData);
+    useState<PlantEncounter>(emptyPlantData);
   const [genusError, setGenusError] = useState(false);
   const [commonNameError, setCommonNameError] = useState(false);
   useEffect(() => setEditFormData(props.entryToEdit), [props.entryToEdit]);

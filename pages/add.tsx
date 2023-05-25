@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import FormHelperText from "@mui/material/FormHelperText";
-import { PlantEncounter } from "./types";
+import { PlantEncounter, emptyPlantData } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
 import { clear } from "console";
@@ -17,18 +17,9 @@ export interface MyProps {
   handleAdd: (newEncounter: PlantEncounter) => void;
 }
 
-const emptyFormData = {
-  id: undefined,
-  genus: "",
-  species: "",
-  commonName: "",
-  lat: undefined,
-  long: undefined,
-};
-
 export default function Add(props: MyProps) {
   const { handleClose, open, handleAdd } = props;
-  const [formData, setFormData] = useState<PlantEncounter>(emptyFormData);
+  const [formData, setFormData] = useState<PlantEncounter>(emptyPlantData);
   const [genusError, setGenusError] = useState(false);
   const [commonNameError, setCommonNameError] = useState(false);
 
@@ -45,7 +36,7 @@ export default function Add(props: MyProps) {
     } else {
       const id = hash(formData);
       handleAdd({ ...formData, id });
-      setFormData(emptyFormData);
+      setFormData(emptyPlantData);
       clearErrors();
       handleClose();
     }
@@ -118,7 +109,7 @@ export default function Add(props: MyProps) {
       <DialogActions>
         <Button
           onClick={() => {
-            setFormData(emptyFormData);
+            setFormData(emptyPlantData);
             clearErrors();
             handleClose();
           }}
