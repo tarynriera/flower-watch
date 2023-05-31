@@ -6,13 +6,13 @@ import {
   GridActionsCellItem,
   GridRowId,
 } from "@mui/x-data-grid";
-import { PlantEncounter } from "./types";
+import { PlantEncounter, emptyPlantData } from "./types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
 export interface ListProps {
-  data: Array<PlantEncounter>;
-  handleSetData: (data: Array<PlantEncounter>) => void;
+  data: Map<GridRowId, PlantEncounter>;
+  handleSetData: (data: Map<GridRowId, PlantEncounter>) => void;
   handleEditOpen: (entryToEdit: PlantEncounter) => void;
 }
 
@@ -25,14 +25,16 @@ export default function List({
   handleSetData,
   handleEditOpen,
 }: ListProps) {
-  const rows: GridRowsProp = data;
+  const rows: GridRowsProp = Array.from(data.values());
 
   const handleDeleteClick = (id: GridRowId) => () => {
-    handleSetData(data.filter((row) => row.id !== id));
+    data.delete(id);
+    handleSetData(data);
   };
 
   const handleEditClick = (id: GridRowId) => () => {
-    handleEditOpen(data.filter((row) => row.id === id)[0]);
+    const entryToEdit = data.get(id);
+    entryToEdit ? handleEditOpen(entryToEdit) : null;
   };
 
   const columns: GridColDef[] = [
@@ -49,12 +51,14 @@ export default function List({
       getActions: ({ id }) => {
         return [
           <GridActionsCellItem
+            key={id}
             icon={<EditIcon />}
             label="Edit"
             onClick={handleEditClick(id)}
             color="inherit"
           />,
           <GridActionsCellItem
+            key={id}
             icon={<DeleteIcon />}
             label="Delete"
             onClick={handleDeleteClick(id)}
