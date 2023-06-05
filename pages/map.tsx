@@ -1,19 +1,16 @@
 import { Box } from "@mui/material";
 import { PlantEncounter } from "./types";
+import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import dynamic from "next/dynamic";
 
 export interface MapProps {
-  data: Array<PlantEncounter>
+  data: Array<PlantEncounter>;
 }
 
+const PlantMap = dynamic(() => import("../components/Map/index"), {
+  ssr: false,
+});
+
 export default function Map({ data }: MapProps) {
-  return (
-    <Box
-      justifyContent="center"
-      display="flex"
-      minHeight="50vh"
-      alignItems="center"
-    >
-      <p>MAP</p>
-    </Box>
-  );
+  return <PlantMap />;
 }
