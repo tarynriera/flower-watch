@@ -1,9 +1,15 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 
-export default function PlantMap() {
+import { PlantEncounter } from "@/pages/types";
+
+export interface PlantMapProps {
+  data: Map<number, PlantEncounter>;
+}
+
+export default function PlantMap({ data }: PlantMapProps) {
   return (
     <MapContainer
-      center={[51.505, -0.09]}
+      center={[39.953483394223255, -75.16256915174992]}
       zoom={13}
       scrollWheelZoom={false}
       style={{ height: "80vh" }}
@@ -12,7 +18,7 @@ export default function PlantMap() {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      <Marker position={[51.505, -0.09]}>
+      <Marker position={[39.953483394223255, -75.16256915174992]}>
         <Popup>
           A pretty CSS3 popup. <br /> Easily customizable.
         </Popup>

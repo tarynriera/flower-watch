@@ -11,6 +11,11 @@ export default function App({ Component, pageProps }: AppProps) {
   const [open, setOpen] = useState(false);
   const [entryToEdit, setEntryToEdit] = useState<PlantEncounter>(emptyPlantData);
 
+  const handleSetData = (data: Map<number, PlantEncounter>) => {
+    const newData = new Map(data)
+    setData(newData);
+  };
+
   //handlers for opening and closing edit form
   const handleEditOpen = (entry: PlantEncounter) => {
     setEntryToEdit(entry);
@@ -20,7 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const handleEdit = (updatedEntry: PlantEncounter) => {
     const newEntry = { ...entryToEdit, ...updatedEntry };
     data.set(newEntry.id, newEntry)
-    setData(data);
+    handleSetData(data);
   };
 
   const handleEditClose = () => {
@@ -30,12 +35,9 @@ export default function App({ Component, pageProps }: AppProps) {
   //handlers for adding to data state
   const handleAddEncounter = (newEncounter: PlantEncounter) => {
     data.set(newEncounter.id, newEncounter);
-    setData(data);
+    handleSetData(data);
   };
 
-  const handleSetData = (data: Map<number, PlantEncounter>) => {
-    setData(data);
-  };
 
   //starter data
   useEffect(
