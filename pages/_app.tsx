@@ -6,9 +6,11 @@ import { useState, useEffect } from "react";
 import Edit from "./edit";
 
 export default function App({ Component, pageProps }: AppProps) {
+  //a map state that stores all entries
   const [data, setData] = useState<Map<number, PlantEncounter>>(new Map());
   //open state for the edit form
   const [open, setOpen] = useState(false);
+  //state that holds the entry currently being edited
   const [entryToEdit, setEntryToEdit] =
     useState<PlantEncounter>(emptyPlantData);
 
@@ -53,6 +55,17 @@ export default function App({ Component, pageProps }: AppProps) {
               commonName: "snowdrop",
               lat: 39.95,
               long: -75.21,
+            },
+          ],
+          [
+            2,
+            {
+              id: 2,
+              genus: "Crocus",
+              species: "sativus",
+              commonName: "crocus",
+              lat: 39.94997326755575,
+              long: -75.21728259021677,
             },
           ],
         ])

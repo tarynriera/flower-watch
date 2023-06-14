@@ -16,10 +16,6 @@ export interface ListProps {
   handleEditOpen: (entryToEdit: PlantEncounter) => void;
 }
 
-function placeholderClick() {
-  return;
-}
-
 export default function List({
   data,
   handleSetData,
