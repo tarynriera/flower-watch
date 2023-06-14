@@ -4,7 +4,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import dynamic from "next/dynamic";
 
 export interface MapProps {
-  data: Array<PlantEncounter>;
+  data: Map<number, PlantEncounter>;
 }
 
 const PlantMap = dynamic(() => import("../components/Map/index"), {
@@ -12,5 +12,5 @@ const PlantMap = dynamic(() => import("../components/Map/index"), {
 });
 
 export default function Map({ data }: MapProps) {
-  return <PlantMap />;
+  return <PlantMap data={data} />;
 }

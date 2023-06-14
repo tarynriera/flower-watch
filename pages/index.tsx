@@ -7,7 +7,7 @@ import { PlantEncounter } from "./types";
 const inter = Inter({ subsets: ["latin"] });
 
 export interface HomeProps {
-  data: Array<PlantEncounter>;
+  data: Map<number, PlantEncounter>;
 }
 
 export default function Home({ data }: HomeProps) {
