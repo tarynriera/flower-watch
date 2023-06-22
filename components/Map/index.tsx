@@ -11,7 +11,7 @@ export default function PlantMap({ data }: PlantMapProps) {
     return (
       <Marker position={[marker.lat, marker.long]}>
         <Popup>
-          A pretty CSS3 popup. <br /> Easily customizable.
+          {marker.genus}, {marker.species} <br /> {marker.commonName}
         </Popup>
       </Marker>
     );
