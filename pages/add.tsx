@@ -9,7 +9,8 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { PlantEncounter, emptyPlantData } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
-import { clear } from "console";
+import { DropZone } from "@/components/Dropzone";
+import { FilePicker } from "@/components/Uploader/file-picker";
 
 export interface MyProps {
   handleClose: () => void;
@@ -52,6 +53,7 @@ export default function Add(props: MyProps) {
     >
       <DialogTitle>Add entry</DialogTitle>
       <DialogContent>
+        <FilePicker accept={["*"]}></FilePicker>
         <DialogContentText>
           Upload a photo and record the Genus, species (if known), and common
           name.
