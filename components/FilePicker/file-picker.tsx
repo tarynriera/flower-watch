@@ -3,9 +3,14 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { DropZone } from "./drop-zone";
 import styles from "./file-picker.module.css";
 import { FilesList } from "./files-list";
+import ExifReader, { ExpandedTags } from "exifreader";
+
+//modified from
+//https://retool.com/blog/building-a-file-picker-component-in-react/
 
 export interface FilePickerProps {
   accept: string[];
+  onUpload: (tags: ExpandedTags) => void;
 }
 
 export type FileWithId = {
@@ -13,7 +18,7 @@ export type FileWithId = {
   file: File;
 };
 
-const FilePicker = ({ accept }: FilePickerProps) => {
+const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
   const [files, setFiles] = useState<FileWithId[]>([]);
 
   // handler called when files are selected via the Dropzone component
@@ -33,43 +38,44 @@ const FilePicker = ({ accept }: FilePickerProps) => {
     setFiles((prev) => prev.filter((file) => file.id !== id));
   }, []);
 
-  // execute the upload operation
-  /*
-  const handleUpload = useCallback(async () => {
-    try {
-      const data = new FormData();
+  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
-      files.forEach((file) => {
-        data.append("file", file.file);
+  //read the file and extract image URL
+  useEffect(() => {
+    let fileReader: FileReader;
+    if (files.length > 0) {
+      const file: File = files[0].file;
+
+      fileReader = new FileReader();
+      fileReader.onload = (e) => {
+        if (e.target && e.target.result) {
+          const { result } = e.target;
+          setPreviewImageURL(String(result));
+        }
+      };
+      fileReader.readAsDataURL(file);
+
+      ExifReader.load(file, { expanded: true }).then((tags) => {
+        onUpload(tags);
       });
-
-      const res = await axios.request({
-        url: uploadURL,
-        method: "POST",
-        data,
-        onUploadProgress: (progressEvent) => {
-          setUploadStarted(true);
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setProgress(percentCompleted);
-        },
-      });
-
-      setUploadStarted(false);
-      console.log(res);
-    } catch (error) {
-      console.log(error);
     }
-  }, [files.length]);
-  */
 
-  console.log(`File Picker Component ${files}`);
+    return () => {
+      if (fileReader && fileReader.readyState === 1) {
+        fileReader.abort();
+      }
+    };
+  }, [files.length]);
+
   return (
     <div className={styles.wrapper}>
       {/* canvas */}
       <div className={styles.canvas_wrapper}>
-        <DropZone onChange={handleOnChange} accept={accept} files={files} />
+        <DropZone
+          onChange={handleOnChange}
+          accept={accept}
+          previewImageURL={previewImageURL}
+        />
       </div>
 
       {/* files listing */}

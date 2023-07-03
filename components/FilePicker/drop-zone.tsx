@@ -8,10 +8,10 @@ export interface BannerProps {
   onClick: () => void;
   // FileList: https://developer.mozilla.org/en-US/docs/Web/API/FileList
   onDrop: (files: FileList) => void;
-  files: FileWithId[];
+  previewImageURL: string | null;
 }
 
-const Banner = ({ onClick, onDrop, files }: BannerProps) => {
+const Banner = ({ onClick, onDrop, previewImageURL }: BannerProps) => {
   const handleDragOver = (ev: React.DragEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -27,7 +27,6 @@ const Banner = ({ onClick, onDrop, files }: BannerProps) => {
       onDrop(ev.dataTransfer.files);
     }
   };
-  console.log(`Banner Component ${files}`);
   return (
     <div
       className={styles.banner}
@@ -35,11 +34,9 @@ const Banner = ({ onClick, onDrop, files }: BannerProps) => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      {files && files.length > 0 ? (
+      {previewImageURL ? (
         <>
-          {files.map(({ file, id }) => (
-            <FilePreview file={file} />
-          ))}
+          <FilePreview imageURL={previewImageURL} />
         </>
       ) : (
         <>
@@ -55,10 +52,14 @@ const Banner = ({ onClick, onDrop, files }: BannerProps) => {
 export interface DropZoneProps {
   onChange: (files: FileList) => void;
   accept: string[];
-  files: FileWithId[];
+  previewImageURL: string | null;
 }
 
-const DropZone = ({ onChange, accept = ["*"], files }: DropZoneProps) => {
+const DropZone = ({
+  onChange,
+  accept = ["*"],
+  previewImageURL,
+}: DropZoneProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -76,10 +77,14 @@ const DropZone = ({ onChange, accept = ["*"], files }: DropZoneProps) => {
   const handleDrop = (files: FileList) => {
     onChange(files);
   };
-  console.log(`DropZone Component ${files}`);
+
   return (
     <div className={styles.wrapper}>
-      <Banner onClick={handleClick} onDrop={handleDrop} files={files} />
+      <Banner
+        onClick={handleClick}
+        onDrop={handleDrop}
+        previewImageURL={previewImageURL}
+      />
       <input
         type="file"
         aria-label="add files"

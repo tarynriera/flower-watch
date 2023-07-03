@@ -11,6 +11,7 @@ import { useState } from "react";
 import hash from "hash-it";
 import { DropZone } from "@/components/Dropzone";
 import { FilePicker } from "@/components/FilePicker/file-picker";
+import { ExpandedTags } from "exifreader";
 
 export interface MyProps {
   handleClose: () => void;
@@ -43,6 +44,16 @@ export default function Add(props: MyProps) {
     }
   }
 
+  function handleImageUpload(tags: ExpandedTags) {
+    if (tags.gps && tags.gps.Longitude && tags.gps.Latitude) {
+      setFormData({
+        ...formData,
+        lat: tags.gps.Latitude,
+        long: tags.gps.Longitude,
+      });
+    }
+  }
+
   return (
     <Dialog
       open={open}
@@ -53,7 +64,7 @@ export default function Add(props: MyProps) {
     >
       <DialogTitle>Add entry</DialogTitle>
       <DialogContent>
-        <FilePicker accept={["*"]}></FilePicker>
+        <FilePicker accept={["*"]} onUpload={handleImageUpload}></FilePicker>
         <br />
         <DialogContentText>
           Upload a photo and record the Genus, species (if known), and common
