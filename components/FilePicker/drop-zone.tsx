@@ -2,6 +2,7 @@ import { array, func } from "prop-types";
 import React, { ChangeEvent } from "react";
 import styles from "./drop-zone.module.css";
 import { FileWithId } from "./file-picker";
+import { FilePreview } from "./file-preview";
 
 export interface BannerProps {
   onClick: () => void;
@@ -35,7 +36,11 @@ const Banner = ({ onClick, onDrop, files }: BannerProps) => {
       onDrop={handleDrop}
     >
       {files && files.length > 0 ? (
-        <div></div>
+        <>
+          {files.map(({ file, id }) => (
+            <FilePreview file={file} />
+          ))}
+        </>
       ) : (
         <>
           <span className={styles.banner_text}>Click to Add files</span>
