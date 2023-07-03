@@ -64,11 +64,12 @@ const FilePicker = ({ accept }: FilePickerProps) => {
   }, [files.length]);
   */
 
+  console.log(`File Picker Component ${files}`);
   return (
     <div className={styles.wrapper}>
       {/* canvas */}
       <div className={styles.canvas_wrapper}>
-        <DropZone onChange={handleOnChange} accept={accept} />
+        <DropZone onChange={handleOnChange} accept={accept} files={files} />
       </div>
 
       {/* files listing */}
