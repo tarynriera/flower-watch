@@ -1,14 +1,16 @@
 import { array, func } from "prop-types";
 import React, { ChangeEvent } from "react";
 import styles from "./drop-zone.module.css";
+import { FileWithId } from "./file-picker";
 
 export interface BannerProps {
   onClick: () => void;
   // FileList: https://developer.mozilla.org/en-US/docs/Web/API/FileList
   onDrop: (files: FileList) => void;
+  files: FileWithId[];
 }
 
-const Banner = ({ onClick, onDrop }: BannerProps) => {
+const Banner = ({ onClick, onDrop, files }: BannerProps) => {
   const handleDragOver = (ev: React.DragEvent) => {
     ev.preventDefault();
     ev.stopPropagation();
@@ -24,7 +26,7 @@ const Banner = ({ onClick, onDrop }: BannerProps) => {
       onDrop(ev.dataTransfer.files);
     }
   };
-
+  console.log(`Banner Component ${files}`);
   return (
     <div
       className={styles.banner}
@@ -32,9 +34,15 @@ const Banner = ({ onClick, onDrop }: BannerProps) => {
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >
-      <span className={styles.banner_text}>Click to Add files</span>
-      <span className={styles.banner_text}>Or</span>
-      <span className={styles.banner_text}>Drag and Drop files here</span>
+      {files && files.length > 0 ? (
+        <div></div>
+      ) : (
+        <>
+          <span className={styles.banner_text}>Click to Add files</span>
+          <span className={styles.banner_text}>Or</span>
+          <span className={styles.banner_text}>Drag and Drop files here</span>
+        </>
+      )}
     </div>
   );
 };
@@ -42,9 +50,10 @@ const Banner = ({ onClick, onDrop }: BannerProps) => {
 export interface DropZoneProps {
   onChange: (files: FileList) => void;
   accept: string[];
+  files: FileWithId[];
 }
 
-const DropZone = ({ onChange, accept = ["*"] }: DropZoneProps) => {
+const DropZone = ({ onChange, accept = ["*"], files }: DropZoneProps) => {
   const inputRef = React.useRef<HTMLInputElement>(null);
 
   const handleClick = () => {
@@ -62,10 +71,10 @@ const DropZone = ({ onChange, accept = ["*"] }: DropZoneProps) => {
   const handleDrop = (files: FileList) => {
     onChange(files);
   };
-
+  console.log(`DropZone Component ${files}`);
   return (
     <div className={styles.wrapper}>
-      <Banner onClick={handleClick} onDrop={handleDrop} />
+      <Banner onClick={handleClick} onDrop={handleDrop} files={files} />
       <input
         type="file"
         aria-label="add files"
