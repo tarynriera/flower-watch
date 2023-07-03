@@ -10,7 +10,7 @@ import { PlantEncounter, emptyPlantData } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
 import { DropZone } from "@/components/Dropzone";
-import { FilePicker } from "@/components/Uploader/file-picker";
+import { FilePicker } from "@/components/FilePicker/file-picker";
 
 export interface MyProps {
   handleClose: () => void;
@@ -54,6 +54,7 @@ export default function Add(props: MyProps) {
       <DialogTitle>Add entry</DialogTitle>
       <DialogContent>
         <FilePicker accept={["*"]}></FilePicker>
+        <br />
         <DialogContentText>
           Upload a photo and record the Genus, species (if known), and common
           name.

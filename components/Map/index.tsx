@@ -21,7 +21,13 @@ export default function PlantMap({ data }: PlantMapProps) {
       center={[39.953483394223255, -75.16256915174992]}
       zoom={13}
       scrollWheelZoom={false}
-      style={{ height: "80vh" }}
+      style={{
+        height: "600px",
+        width: "700px",
+        marginLeft: "auto",
+        marginRight: "auto",
+        marginBottom: "2rem",
+      }}
     >
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
