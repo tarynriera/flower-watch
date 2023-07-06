@@ -4,6 +4,7 @@ import { DropZone } from "./drop-zone";
 import styles from "./file-picker.module.css";
 import { FilesList } from "./files-list";
 import ExifReader, { ExpandedTags } from "exifreader";
+import heic2any from "heic2any";
 
 //modified from
 //https://retool.com/blog/building-a-file-picker-component-in-react/
@@ -20,6 +21,7 @@ export type FileWithId = {
 
 const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
   const [files, setFiles] = useState<FileWithId[]>([]);
+  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
 
   // handler called when files are selected via the Dropzone component
   const handleOnChange = useCallback((files: FileList) => {
@@ -38,33 +40,38 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
     setFiles((prev) => prev.filter((file) => file.id !== id));
   }, []);
 
-  const [previewImageURL, setPreviewImageURL] = useState<string | null>(null);
+  //handler for setting the preview image URL that cleans up old URL
+  const handleSetPreviewImageURL = (url: string) => {
+    if (previewImageURL) {
+      URL.revokeObjectURL(previewImageURL);
+    }
+    setPreviewImageURL(url);
+  };
 
   //read the file and extract image URL
   useEffect(() => {
-    let fileReader: FileReader;
     if (files.length > 0) {
+      //pull out first file
       const file: File = files[0].file;
-
-      fileReader = new FileReader();
-      fileReader.onload = (e) => {
-        if (e.target && e.target.result) {
-          const { result } = e.target;
-          setPreviewImageURL(String(result));
-        }
-      };
-      fileReader.readAsDataURL(file);
-
+      //read exif data
       ExifReader.load(file, { expanded: true }).then((tags) => {
         onUpload(tags);
       });
-    }
-
-    return () => {
-      if (fileReader && fileReader.readyState === 1) {
-        fileReader.abort();
+      //check if heic format then convert
+      if (file.type in ["image/heic", "image/heif"]) {
+        heic2any({ blob: file, toType: "image/png" }).then(
+          (conversionResult) => {
+            if (conversionResult instanceof Blob) {
+              const convertedURL = URL.createObjectURL(conversionResult);
+              handleSetPreviewImageURL(convertedURL);
+            }
+          }
+        );
+      } else {
+        const previewURL = URL.createObjectURL(file);
+        handleSetPreviewImageURL(previewURL);
       }
-    };
+    }
   }, [files.length]);
 
   return (

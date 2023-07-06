@@ -10,8 +10,12 @@ import { PlantEncounter, emptyPlantData } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
 import { DropZone } from "@/components/Dropzone";
-import { FilePicker } from "@/components/FilePicker/file-picker";
 import { ExpandedTags } from "exifreader";
+import dynamic from "next/dynamic";
+
+const FilePicker = dynamic(() => import("../components/FilePicker/index"), {
+  ssr: false,
+});
 
 export interface MyProps {
   handleClose: () => void;
