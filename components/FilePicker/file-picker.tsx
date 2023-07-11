@@ -11,7 +11,7 @@ import heic2any from "heic2any";
 
 export interface FilePickerProps {
   accept: string[];
-  onUpload: (tags: ExpandedTags) => void;
+  onUpload: (tags: ExpandedTags, previewImageURL: string) => void;
 }
 
 export type FileWithId = {
@@ -54,23 +54,30 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
       //pull out first file
       const file: File = files[0].file;
       //read exif data
-      ExifReader.load(file, { expanded: true }).then((tags) => {
-        onUpload(tags);
-      });
+      const exifPromise = ExifReader.load(file, { expanded: true });
+
+      let imagePromise;
+
       //check if heic format then convert
       if (file.type in ["image/heic", "image/heif"]) {
-        heic2any({ blob: file, toType: "image/png" }).then(
+        imagePromise = heic2any({ blob: file, toType: "image/png" }).then(
           (conversionResult) => {
             if (conversionResult instanceof Blob) {
-              const convertedURL = URL.createObjectURL(conversionResult);
-              handleSetPreviewImageURL(convertedURL);
+              return URL.createObjectURL(conversionResult);
             }
+            return "";
           }
         );
       } else {
-        const previewURL = URL.createObjectURL(file);
-        handleSetPreviewImageURL(previewURL);
+        imagePromise = new Promise<string>((resolve, reject) => {
+          return resolve(URL.createObjectURL(file));
+        });
       }
+
+      Promise.all([exifPromise, imagePromise]).then(([imageTags, imageURL]) => {
+        handleSetPreviewImageURL(imageURL);
+        onUpload(imageTags, imageURL);
+      });
     }
   }, [files.length]);
 

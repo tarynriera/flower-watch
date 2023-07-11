@@ -9,10 +9,10 @@ import FormHelperText from "@mui/material/FormHelperText";
 import { PlantEncounter, emptyPlantData } from "./types";
 import { useState } from "react";
 import hash from "hash-it";
-import { DropZone } from "@/components/Dropzone";
 import { ExpandedTags } from "exifreader";
 import dynamic from "next/dynamic";
 
+//server side rendering is disabled for components using libraries that need a browser context (heic2any, exif reader)
 const FilePicker = dynamic(() => import("../components/FilePicker/index"), {
   ssr: false,
 });
@@ -48,13 +48,16 @@ export default function Add(props: MyProps) {
     }
   }
 
-  function handleImageUpload(tags: ExpandedTags) {
+  function handleImageUpload(tags: ExpandedTags, previewImageURL: string) {
     if (tags.gps && tags.gps.Longitude && tags.gps.Latitude) {
-      setFormData({
+      const newFormData = {
         ...formData,
         lat: tags.gps.Latitude,
         long: tags.gps.Longitude,
-      });
+        imgURL: previewImageURL,
+      };
+      setFormData(newFormData);
+      console.log(newFormData);
     }
   }
 

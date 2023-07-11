@@ -5,6 +5,7 @@ export interface PlantEncounter {
   commonName: string;
   lat: number;
   long: number;
+  imgURL?: string;
 }
 
 const EMPTY_DATA_ID = 0;
@@ -18,4 +19,5 @@ export const emptyPlantData = {
   commonName: "",
   lat: DEFAULT_LAT,
   long: DEFAULT_LONG,
+  imgURL: "",
 };

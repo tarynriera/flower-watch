@@ -11,6 +11,7 @@ export default function PlantMap({ data }: PlantMapProps) {
     return (
       <Marker position={[marker.lat, marker.long]}>
         <Popup>
+          <img src={marker.imgURL}></img>
           {marker.genus}, {marker.species} <br /> {marker.commonName}
         </Popup>
       </Marker>
