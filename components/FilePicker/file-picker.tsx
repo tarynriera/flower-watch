@@ -59,7 +59,7 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
       let imagePromise;
 
       //check if heic format then convert
-      if (file.type in ["image/heic", "image/heif"]) {
+      if (["image/heic", "image/heif"].includes(file.type)) {
         imagePromise = heic2any({ blob: file, toType: "image/png" }).then(
           (conversionResult) => {
             if (conversionResult instanceof Blob) {
