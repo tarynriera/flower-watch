@@ -2,7 +2,7 @@ import * as React from "react";
 import Head from "next/head";
 import { Inter } from "next/font/google";
 import Map from "./map";
-import { PlantEncounter } from "./types";
+import { PlantEncounter } from "../common/types";
 
 const inter = Inter({ subsets: ["latin"] });
 

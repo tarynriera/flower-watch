@@ -7,10 +7,10 @@ import ViewListIcon from "@mui/icons-material/ViewList";
 import MapIcon from "@mui/icons-material/Map";
 import Link from "next/link";
 import Add from "./add";
-import { PlantEncounter } from "./types";
+import { PlantEncounter } from "../common/types";
 
 export interface BottomNavProps {
-  handleAddEncounter: (newEncounter: PlantEncounter) => void
+  handleAddEncounter: (newEncounter: PlantEncounter) => void;
 }
 
 export default function BottomNav({ handleAddEncounter }: BottomNavProps) {
@@ -59,7 +59,11 @@ export default function BottomNav({ handleAddEncounter }: BottomNavProps) {
           onClick={handleClickOpen}
         />
       </BottomNavigation>
-      <Add handleClose={handleClose} handleAdd={handleAddEncounter} open={open} />
+      <Add
+        handleClose={handleClose}
+        handleAdd={handleAddEncounter}
+        open={open}
+      />
     </Box>
   );
 }

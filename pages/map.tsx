@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { PlantEncounter } from "./types";
+import { PlantEncounter } from "../common/types";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import dynamic from "next/dynamic";
 

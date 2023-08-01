@@ -6,7 +6,7 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
 import FormHelperText from "@mui/material/FormHelperText";
-import { PlantEncounter, emptyPlantData } from "./types";
+import { PlantEncounter, emptyPlantData } from "../common/types";
 import { useState } from "react";
 import hash from "hash-it";
 import { ExpandedTags } from "exifreader";

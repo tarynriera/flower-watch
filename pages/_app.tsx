@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
 import Layout from "./layout";
-import { PlantEncounter, emptyPlantData } from "./types";
+import { PlantEncounter, emptyPlantData } from "../common/types";
 import { useState, useEffect } from "react";
 import Edit from "./edit";
+import { db } from "@/common/db";
+import { useLiveQuery } from "dexie-react-hooks";
 
 export default function App({ Component, pageProps }: AppProps) {
   //a map state that stores all entries
@@ -13,6 +15,17 @@ export default function App({ Component, pageProps }: AppProps) {
   //state that holds the entry currently being edited
   const [entryToEdit, setEntryToEdit] =
     useState<PlantEncounter>(emptyPlantData);
+
+  //fetch data from indexedDB
+  const plants_array = useLiveQuery(() => db.plants.toArray());
+
+  useEffect(
+    () =>
+      setData(
+        new Map(plants_array?.map((encounter) => [encounter.id, encounter]))
+      ),
+    [plants_array]
+  );
 
   //handlers for opening and closing edit form
   const handleEditOpen = (entry: PlantEncounter) => {
@@ -34,6 +47,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const handleAddEncounter = (newEncounter: PlantEncounter) => {
     data.set(newEncounter.id, newEncounter);
     handleSetData(data);
+    addPlant(newEncounter);
   };
 
   const handleSetData = (data: Map<number, PlantEncounter>) => {
@@ -41,7 +55,18 @@ export default function App({ Component, pageProps }: AppProps) {
     setData(newData);
   };
 
+  //handler for adding data to indexedDB
+  async function addPlant(encounter: PlantEncounter) {
+    try {
+      const id = await db.plants.add(encounter);
+      console.log("Added plant");
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   //starter data
+  /**
   useEffect(
     () =>
       setData(
@@ -72,6 +97,7 @@ export default function App({ Component, pageProps }: AppProps) {
       ),
     []
   );
+  */
 
   return (
     <Layout handleAddEncounter={handleAddEncounter}>

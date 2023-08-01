@@ -1,5 +1,5 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
-import { PlantEncounter } from "@/pages/types";
+import { PlantEncounter } from "@/common/types";
 
 export interface PlantMapProps {
   data: Map<number, PlantEncounter>;

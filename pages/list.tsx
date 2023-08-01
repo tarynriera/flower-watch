@@ -6,7 +6,7 @@ import {
   GridActionsCellItem,
   GridRowId,
 } from "@mui/x-data-grid";
-import { PlantEncounter, emptyPlantData } from "./types";
+import { PlantEncounter, emptyPlantData } from "../common/types";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/DeleteOutlined";
 
