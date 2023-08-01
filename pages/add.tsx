@@ -48,13 +48,18 @@ export default function Add(props: MyProps) {
     }
   }
 
-  function handleImageUpload(tags: ExpandedTags, previewImageURL: string) {
+  function handleImageUpload(
+    tags: ExpandedTags,
+    previewImageURL: string,
+    imgBlob: Blob
+  ) {
     if (tags.gps && tags.gps.Longitude && tags.gps.Latitude) {
       const newFormData = {
         ...formData,
         lat: tags.gps.Latitude,
         long: tags.gps.Longitude,
         imgURL: previewImageURL,
+        imgBlob: imgBlob,
       };
       setFormData(newFormData);
       console.log(newFormData);

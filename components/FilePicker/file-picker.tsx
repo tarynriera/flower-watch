@@ -11,12 +11,21 @@ import heic2any from "heic2any";
 
 export interface FilePickerProps {
   accept: string[];
-  onUpload: (tags: ExpandedTags, previewImageURL: string) => void;
+  onUpload: (
+    tags: ExpandedTags,
+    previewImageURL: string,
+    imgBlob: Blob
+  ) => void;
 }
 
 export type FileWithId = {
   id: string;
   file: File;
+};
+
+type ImageData = {
+  imgURL: string;
+  imgBlob: Blob;
 };
 
 const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
@@ -56,28 +65,36 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
       //read exif data
       const exifPromise = ExifReader.load(file, { expanded: true });
 
-      let imagePromise;
+      let imagePromise: Promise<ImageData | null>;
 
       //check if heic format then convert
       if (["image/heic", "image/heif"].includes(file.type)) {
         imagePromise = heic2any({ blob: file, toType: "image/png" }).then(
           (conversionResult) => {
             if (conversionResult instanceof Blob) {
-              return URL.createObjectURL(conversionResult);
+              return {
+                imgURL: URL.createObjectURL(conversionResult),
+                imgBlob: conversionResult,
+              };
             }
-            return "";
+            return null;
           }
         );
       } else {
-        imagePromise = new Promise<string>((resolve, reject) => {
-          return resolve(URL.createObjectURL(file));
+        imagePromise = new Promise<ImageData>((resolve, reject) => {
+          return resolve({ imgURL: URL.createObjectURL(file), imgBlob: file });
         });
       }
 
-      Promise.all([exifPromise, imagePromise]).then(([imageTags, imageURL]) => {
-        handleSetPreviewImageURL(imageURL);
-        onUpload(imageTags, imageURL);
-      });
+      Promise.all([exifPromise, imagePromise]).then(
+        ([imageTags, imageData]) => {
+          if (imageData !== null) {
+            const { imgURL, imgBlob } = imageData;
+            handleSetPreviewImageURL(imgURL);
+            onUpload(imageTags, imgURL, imgBlob);
+          }
+        }
+      );
     }
   }, [files.length]);
 

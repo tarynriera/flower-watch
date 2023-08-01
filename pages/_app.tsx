@@ -19,13 +19,21 @@ export default function App({ Component, pageProps }: AppProps) {
   //fetch data from indexedDB
   const plants_array = useLiveQuery(() => db.plants.toArray());
 
-  useEffect(
-    () =>
-      setData(
-        new Map(plants_array?.map((encounter) => [encounter.id, encounter]))
-      ),
-    [plants_array]
-  );
+  useEffect(() => {
+    //generate new URLs for saved images
+    const plants_array_with_URLs = plants_array?.map((encounter) => {
+      if (encounter.imgBlob) {
+        const imgURL = URL.createObjectURL(encounter.imgBlob);
+        return { ...encounter, imgURL };
+      }
+      return encounter;
+    });
+    setData(
+      new Map(
+        plants_array_with_URLs?.map((encounter) => [encounter.id, encounter])
+      )
+    );
+  }, [plants_array]);
 
   //handlers for opening and closing edit form
   const handleEditOpen = (entry: PlantEncounter) => {
