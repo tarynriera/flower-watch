@@ -6,6 +6,7 @@ export interface PlantEncounter {
   lat: number;
   long: number;
   imgURL?: string;
+  imgBlob?: Blob;
 }
 
 const EMPTY_DATA_ID = 0;

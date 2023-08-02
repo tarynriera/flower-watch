@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import Edit from "./edit";
 import { db } from "@/common/db";
 import { useLiveQuery } from "dexie-react-hooks";
+import { GridRowId } from "@mui/x-data-grid";
 
 export default function App({ Component, pageProps }: AppProps) {
   //a map state that stores all entries
@@ -45,6 +46,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const newEntry = { ...entryToEdit, ...updatedEntry };
     data.set(newEntry.id, newEntry);
     handleSetData(data);
+    editPlant(updatedEntry);
   };
 
   const handleEditClose = () => {
@@ -71,6 +73,16 @@ export default function App({ Component, pageProps }: AppProps) {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  //handler for deleting items from indexedDB
+  async function deletePlant(id: GridRowId) {
+    await db.plants.delete(id);
+  }
+
+  //handler for editing items in indexedDB
+  async function editPlant(encounter: PlantEncounter) {
+    await db.plants.put(encounter);
   }
 
   //starter data
@@ -114,6 +126,8 @@ export default function App({ Component, pageProps }: AppProps) {
         handleSetData={handleSetData}
         editOpen={open}
         handleEditOpen={handleEditOpen}
+        deletePlant={deletePlant}
+        editPlant={editPlant}
         {...pageProps}
       />
       <Edit

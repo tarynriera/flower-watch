@@ -14,18 +14,21 @@ export interface ListProps {
   data: Map<GridRowId, PlantEncounter>;
   handleSetData: (data: Map<GridRowId, PlantEncounter>) => void;
   handleEditOpen: (entryToEdit: PlantEncounter) => void;
+  deletePlant: (id: GridRowId) => void;
 }
 
 export default function List({
   data,
   handleSetData,
   handleEditOpen,
+  deletePlant,
 }: ListProps) {
   const rows: GridRowsProp = Array.from(data.values());
 
   const handleDeleteClick = (id: GridRowId) => () => {
     data.delete(id);
     handleSetData(data);
+    deletePlant(id);
   };
 
   const handleEditClick = (id: GridRowId) => () => {
