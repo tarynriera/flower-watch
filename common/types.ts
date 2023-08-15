@@ -3,6 +3,7 @@ export interface PlantEncounter {
   genus: string;
   species?: string;
   commonName: string;
+  notes?: string;
   lat: number;
   long: number;
   imgURL?: string;
@@ -18,6 +19,7 @@ export const emptyPlantData = {
   genus: "",
   species: "",
   commonName: "",
+  notes: "",
   lat: DEFAULT_LAT,
   long: DEFAULT_LONG,
   imgURL: "",

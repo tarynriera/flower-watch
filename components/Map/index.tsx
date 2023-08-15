@@ -16,7 +16,11 @@ export default function PlantMap({ data }: PlantMapProps) {
             style={{ width: "100px", height: "auto" }}
           ></img>{" "}
           <br />
-          {marker.genus}, {marker.species} <br /> {marker.commonName}
+          {marker.genus}, {marker.species}
+          <br />
+          {marker.commonName}
+          <br />
+          {marker.notes}
         </Popup>
       </Marker>
     );

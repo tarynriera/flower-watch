@@ -131,6 +131,19 @@ export default function Add(props: MyProps) {
             error: commonNameError,
           }}
         />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="notes"
+          label="Notes"
+          type="text"
+          fullWidth
+          variant="standard"
+          multiline
+          rows={4}
+          value={formData.notes ?? ""}
+          onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
+        />
       </DialogContent>
       <DialogActions>
         <Button
