@@ -44,9 +44,10 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
     setFiles(filesWithId);
   }, []);
 
-  // handle for removing files form the files list view
+  // handler for removing files form the files list view
   const handleClearFile = useCallback((id: string) => {
     setFiles((prev) => prev.filter((file) => file.id !== id));
+    setPreviewImageURL(null);
   }, []);
 
   //handler for setting the preview image URL that cleans up old URL
