@@ -28,6 +28,7 @@ export default function Add(props: MyProps) {
   const [formData, setFormData] = useState<PlantEncounter>(emptyPlantData);
   const [genusError, setGenusError] = useState(false);
   const [commonNameError, setCommonNameError] = useState(false);
+  const [imageData, setImageData] = useState({});
 
   function clearErrors() {
     setGenusError(false);
@@ -41,7 +42,7 @@ export default function Add(props: MyProps) {
       setCommonNameError(true);
     } else {
       const id = hash(formData);
-      handleAdd({ ...formData, id });
+      handleAdd({ ...formData, ...imageData, id });
       setFormData(emptyPlantData);
       clearErrors();
       handleClose();
@@ -54,15 +55,13 @@ export default function Add(props: MyProps) {
     imgBlob: Blob
   ) {
     if (tags.gps && tags.gps.Longitude && tags.gps.Latitude) {
-      const newFormData = {
-        ...formData,
+      const newImageData = {
         lat: tags.gps.Latitude,
         long: tags.gps.Longitude,
         imgURL: previewImageURL,
         imgBlob: imgBlob,
       };
-      setFormData(newFormData);
-      console.log(newFormData);
+      setImageData(newImageData);
     }
   }
 

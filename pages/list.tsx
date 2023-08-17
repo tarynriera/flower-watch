@@ -71,8 +71,8 @@ export default function List({
   return (
     <Box
       display="flex"
-      height={500}
-      width={600}
+      height={600}
+      width={700}
       margin="auto"
       color="antiquewhite"
       padding={2}
