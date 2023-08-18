@@ -54,6 +54,12 @@ export default function BottomNav({ handleAddEncounter }: BottomNavProps) {
           LinkComponent={Link}
         />
         <BottomNavigationAction
+          label="Grid"
+          icon={<ViewListIcon />}
+          href="/grid"
+          LinkComponent={Link}
+        />
+        <BottomNavigationAction
           label="Add"
           icon={<LocalFloristIcon />}
           onClick={handleClickOpen}
