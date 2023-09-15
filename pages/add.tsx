@@ -12,38 +12,60 @@ import hash from "hash-it";
 import { ExpandedTags } from "exifreader";
 import dynamic from "next/dynamic";
 
-//server side rendering is disabled for components using libraries that need a browser context (heic2any, exif reader)
+// server side rendering is disabled for components using libraries that need a browser context (heic2any, exif reader)
 const FilePicker = dynamic(() => import("../components/FilePicker/index"), {
   ssr: false,
 });
 
-export interface MyProps {
+type Location = {
+  lat: number;
+  long: number;
+};
+
+export interface AddProps {
   handleClose: () => void;
   open: boolean;
   handleAdd: (newEncounter: PlantEncounter) => void;
 }
 
-export default function Add(props: MyProps) {
+export default function Add(props: AddProps) {
   const { handleClose, open, handleAdd } = props;
   const [formData, setFormData] = useState<PlantEncounter>(emptyPlantData);
   const [genusError, setGenusError] = useState(false);
   const [commonNameError, setCommonNameError] = useState(false);
+  const [locationError, setLocationError] = useState(false);
   const [imageData, setImageData] = useState({});
+  const [locationData, setLocationData] = useState<Location | null>(null);
 
   function clearErrors() {
     setGenusError(false);
     setCommonNameError(false);
+    setLocationError(false);
   }
 
   function handleSubmit() {
+    // check for required fields
     if (formData.genus === "") {
       setGenusError(true);
     } else if (formData.commonName === "") {
       setCommonNameError(true);
+    } else if (
+      // check for location data either from image or form if not present
+      locationData === null &&
+      (formData.lat === null || formData.long === null)
+    ) {
+      setLocationError(true);
     } else {
       const id = hash(formData);
-      handleAdd({ ...formData, ...imageData, id });
+      const location = locationData ?? {
+        lat: formData.lat,
+        long: formData.long,
+      };
+      // add the data and reset the form
+      handleAdd({ ...formData, ...imageData, ...location, id });
       setFormData(emptyPlantData);
+      setLocationData(null);
+      setImageData({});
       clearErrors();
       handleClose();
     }
@@ -55,14 +77,15 @@ export default function Add(props: MyProps) {
     imgBlob: Blob
   ) {
     if (tags.gps && tags.gps.Longitude && tags.gps.Latitude) {
-      const newImageData = {
+      setLocationData({
         lat: tags.gps.Latitude,
         long: tags.gps.Longitude,
-        imgURL: previewImageURL,
-        imgBlob: imgBlob,
-      };
-      setImageData(newImageData);
+      });
     }
+    setImageData({
+      imgURL: previewImageURL,
+      imgBlob: imgBlob,
+    });
   }
 
   return (
@@ -143,6 +166,44 @@ export default function Add(props: MyProps) {
           value={formData.notes ?? ""}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
         />
+        {/* lat and long fields are conditionally rendered if uploaded image has no gps data */}
+        {locationError && (
+          <>
+            <DialogContentText>
+              No location data found. Please add latitude and longitude.
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="latitude"
+              label="Latitude"
+              type="number"
+              fullWidth
+              variant="standard"
+              value={formData.lat ?? ""}
+              onChange={(e) =>
+                setFormData({ ...formData, lat: Number(e.target.value) })
+              }
+              required
+              error={locationError}
+            />
+            <TextField
+              autoFocus
+              margin="dense"
+              id="longitude"
+              label="Longitude"
+              type="number"
+              fullWidth
+              variant="standard"
+              value={formData.long ?? ""}
+              onChange={(e) =>
+                setFormData({ ...formData, long: Number(e.target.value) })
+              }
+              required
+              error={locationError}
+            />
+          </>
+        )}
       </DialogContent>
       <DialogActions>
         <Button

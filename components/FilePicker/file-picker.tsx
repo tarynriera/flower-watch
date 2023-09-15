@@ -50,7 +50,7 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
     setPreviewImageURL(null);
   }, []);
 
-  //handler for setting the preview image URL that cleans up old URL
+  // handler for setting the preview image URL that cleans up old URL
   const handleSetPreviewImageURL = (url: string) => {
     if (previewImageURL) {
       URL.revokeObjectURL(previewImageURL);
@@ -58,7 +58,7 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
     setPreviewImageURL(url);
   };
 
-  //read the file and extract image URL
+  // read the file and extract image URL
   useEffect(() => {
     if (files.length > 0) {
       //pull out first file
@@ -68,9 +68,8 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
 
       let imagePromise: Promise<ImageData | null>;
 
-      //check if heic format then convert
+      // check if heic format then convert
       if (["image/heic", "image/heif"].includes(file.type)) {
-        console.log("this is an heic image");
         imagePromise = heic2any({ blob: file, toType: "image/png" }).then(
           (conversionResult) => {
             if (conversionResult instanceof Blob) {
@@ -83,7 +82,6 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
           }
         );
       } else {
-        console.log("not an heic image");
         imagePromise = new Promise<ImageData>((resolve, reject) => {
           return resolve({ imgURL: URL.createObjectURL(file), imgBlob: file });
         });
@@ -92,9 +90,6 @@ const FilePicker = ({ accept, onUpload }: FilePickerProps) => {
       Promise.all([exifPromise, imagePromise]).then(
         ([imageTags, imageData]) => {
           if (imageData !== null) {
-            console.log("image processing happening");
-            console.log(imageTags);
-            console.log(imageData);
             const { imgURL, imgBlob } = imageData;
             handleSetPreviewImageURL(imgURL);
             onUpload(imageTags, imgURL, imgBlob);

@@ -3,11 +3,12 @@ import { Box, Card, CardContent } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import { experimentalStyled as styled } from "@mui/material/styles";
 import { PlantEncounter } from "@/common/types";
+import CardMedia from "@mui/material/CardMedia";
 
 const Item = styled(Card)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
-  padding: theme.spacing(2),
+  //padding: theme.spacing(2),
   textAlign: "center",
   color: theme.palette.text.secondary,
 }));
@@ -29,13 +30,14 @@ export default function GridView({ data }: GridProps) {
         columns={{ xs: 4, sm: 8, md: 12 }}
       >
         {gridData.map((entry, index) => (
-          <Grid xs={2} sm={4} md={4} key={index}>
-            <Item sx={{ maxWidth: 345 }}>
+          <Grid xs={2} sm={3} md={3} key={index}>
+            <Item sx={{ maxWidth: 260, maxHeight: 350 }}>
+              <CardMedia
+                sx={{ height: 140 }}
+                image={entry.imgURL}
+                title="green iguana"
+              />
               <CardContent>
-                <img
-                  src={entry.imgURL}
-                  style={{ width: "100px", height: "auto" }}
-                ></img>
                 <br />
                 {entry.genus}, {entry.species} <br /> {entry.commonName} <br />
                 {entry.notes}
