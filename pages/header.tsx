@@ -1,9 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 
 export default function Header() {
   return (
     <Box display="flex" justifyContent="center">
-      <h1>Flower Watch</h1>
+      <Typography variant="h3" fontFamily={"georgia"} color={"antiquewhite"}>
+        Flower Watch
+      </Typography>
     </Box>
   );
 }
