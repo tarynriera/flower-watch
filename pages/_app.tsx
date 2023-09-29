@@ -90,40 +90,6 @@ export default function App({ Component, pageProps }: AppProps) {
     await db.plants.put(encounter);
   }
 
-  //starter data
-  /**
-  useEffect(
-    () =>
-      setData(
-        new Map([
-          [
-            1,
-            {
-              id: 1,
-              genus: "Galanthus",
-              species: "nivalis",
-              commonName: "snowdrop",
-              lat: 39.95,
-              long: -75.21,
-            },
-          ],
-          [
-            2,
-            {
-              id: 2,
-              genus: "Crocus",
-              species: "sativus",
-              commonName: "crocus",
-              lat: 39.94997326755575,
-              long: -75.21728259021677,
-            },
-          ],
-        ])
-      ),
-    []
-  );
-  */
-
   return (
     <Layout handleAddEncounter={handleAddEncounter}>
       <Component
