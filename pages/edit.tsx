@@ -22,6 +22,7 @@ const emptyFormData = {
   commonName: "",
   lat: undefined,
   long: undefined,
+  notes: "",
 };
 
 export default function Edit(props: EditProps) {
@@ -114,6 +115,21 @@ export default function Edit(props: EditProps) {
             children: "If common name unknown, use Genus",
             error: commonNameError,
           }}
+        />
+        <TextField
+          autoFocus
+          margin="dense"
+          id="notes"
+          label="Notes"
+          type="text"
+          fullWidth
+          variant="standard"
+          multiline
+          rows={4}
+          value={editFormData.notes ?? ""}
+          onChange={(e) =>
+            setEditFormData({ ...editFormData, notes: e.target.value })
+          }
         />
       </DialogContent>
       <DialogActions>
