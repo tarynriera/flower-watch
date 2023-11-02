@@ -4,15 +4,9 @@ import Grid from "@mui/material/Unstable_Grid2";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
-const DetailMap = dynamic(
-  () =>
-    import(
-      "/Users/tarynriera/workspace/flower-watch/components/DetailMap/index"
-    ),
-  {
-    ssr: false,
-  }
-);
+const DetailMap = dynamic(() => import("../../components/DetailMap/index"), {
+  ssr: false,
+});
 
 export interface DetailProps {
   data: Map<number, PlantEncounter>;
@@ -35,12 +29,13 @@ export default function Detail({ data }: DetailProps) {
         <Grid xs={4} sm={4} md={6} lg={6}>
           <Card
             sx={{
-              maxWidth: 500,
-              maxHeight: 500,
+              //maxWidth: 500,
+              //maxHeight: 500,
               minHeight: 240,
               minWidth: 215,
               flexShrink: 1,
               textAlign: "center",
+              //margin: "auto",
             }}
           >
             <CardMedia sx={{ height: 260 }} image={entry?.imgURL} />
@@ -58,7 +53,8 @@ export default function Detail({ data }: DetailProps) {
         <Grid xs={8} sm={8} md={12} lg={12}>
           <Card>
             <CardContent>
-              <Typography>Notes: {entry.notes}</Typography>
+              <Typography variant="h6">Notes: </Typography>
+              <Typography variant="body1">{entry.notes}</Typography>
             </CardContent>
           </Card>
         </Grid>
