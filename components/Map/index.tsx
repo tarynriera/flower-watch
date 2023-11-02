@@ -1,5 +1,6 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { PlantEncounter } from "@/common/types";
+import Link from "next/link";
 
 export interface PlantMapProps {
   data: Map<number, PlantEncounter>;
@@ -14,13 +15,13 @@ export default function PlantMap({ data }: PlantMapProps) {
           <img
             src={marker.imgURL}
             style={{ width: "100px", height: "auto" }}
-          ></img>{" "}
+          ></img>
           <br />
           {marker.genus}, {marker.species}
           <br />
           {marker.commonName}
           <br />
-          {marker.notes}
+          <Link href={`/detail/${marker.id}`}>See more</Link>
         </Popup>
       </Marker>
     );
