@@ -1,12 +1,24 @@
 import { PlantEncounter } from "@/common/types";
-import { Card, CardContent, CardMedia, Typography } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActionArea,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Stack,
+  Typography,
+} from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useRouter } from "next/router";
 import { NoSsr } from "@mui/material";
 import DetailMap from "@/components/DetailMap";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 export interface DetailProps {
   data: Map<number, PlantEncounter>;
+  handleEditOpen: (entryToEdit: PlantEncounter) => void;
 }
 
 export default function Detail({ data }: DetailProps) {
@@ -32,7 +44,7 @@ export default function Detail({ data }: DetailProps) {
               minWidth: 215,
               flexShrink: 1,
               textAlign: "center",
-              //margin: "auto",
+              margin: "auto",
             }}
           >
             <CardMedia sx={{ height: 260 }} image={entry?.imgURL} />
@@ -42,6 +54,14 @@ export default function Detail({ data }: DetailProps) {
                 {entry.genus} {entry.species}
               </Typography>
             </CardContent>
+            <CardActions>
+              <Button size="small" variant="text" startIcon={<EditIcon />}>
+                Edit
+              </Button>
+              <Button size="small" variant="text" startIcon={<DeleteIcon />}>
+                Delete
+              </Button>
+            </CardActions>
           </Card>
         </Grid>
         <Grid xs={4} sm={4} md={6} lg={6}>
