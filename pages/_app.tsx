@@ -7,6 +7,26 @@ import Edit from "./edit";
 import { db } from "@/common/db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { GridRowId } from "@mui/x-data-grid";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const theme = createTheme({
+  palette: {
+    mode: "light",
+    primary: {
+      main: "#a091a0",
+    },
+    secondary: {
+      main: "#faebd7",
+    },
+    background: {
+      paper: "#fff8e1",
+      default: "#91A091",
+    },
+    error: {
+      main: "rgb(112, 101, 112)",
+    },
+  },
+});
 
 export default function App({ Component, pageProps }: AppProps) {
   //a map state that stores all entries
@@ -91,22 +111,24 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   return (
-    <Layout handleAddEncounter={handleAddEncounter}>
-      <Component
-        data={data}
-        handleSetData={handleSetData}
-        editOpen={open}
-        handleEditOpen={handleEditOpen}
-        deletePlant={deletePlant}
-        editPlant={editPlant}
-        {...pageProps}
-      />
-      <Edit
-        editOpen={open}
-        entryToEdit={entryToEdit}
-        handleEditClose={handleEditClose}
-        handleEdit={handleEdit}
-      />
-    </Layout>
+    <ThemeProvider theme={theme}>
+      <Layout handleAddEncounter={handleAddEncounter}>
+        <Component
+          data={data}
+          handleSetData={handleSetData}
+          editOpen={open}
+          handleEditOpen={handleEditOpen}
+          deletePlant={deletePlant}
+          editPlant={editPlant}
+          {...pageProps}
+        />
+        <Edit
+          editOpen={open}
+          entryToEdit={entryToEdit}
+          handleEditClose={handleEditClose}
+          handleEdit={handleEdit}
+        />
+      </Layout>
+    </ThemeProvider>
   );
 }
