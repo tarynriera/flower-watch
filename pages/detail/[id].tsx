@@ -6,15 +6,17 @@ import {
   CardActions,
   CardContent,
   CardMedia,
-  Stack,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
 import { useRouter } from "next/router";
-import { NoSsr } from "@mui/material";
-import DetailMap from "@/components/DetailMap";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import dynamic from "next/dynamic";
+
+const DetailMap = dynamic(() => import("../../components/DetailMap/index"), {
+  ssr: false,
+});
 
 export interface DetailProps {
   data: Map<number, PlantEncounter>;
@@ -65,9 +67,7 @@ export default function Detail({ data }: DetailProps) {
           </Card>
         </Grid>
         <Grid xs={4} sm={4} md={6} lg={6}>
-          <NoSsr>
-            <DetailMap entry={entry} />
-          </NoSsr>
+          <DetailMap entry={entry} />
         </Grid>
         <Grid xs={8} sm={8} md={12} lg={12}>
           <Card>

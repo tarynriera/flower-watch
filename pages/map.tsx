@@ -1,15 +1,14 @@
 import { PlantEncounter } from "../common/types";
-import { NoSsr } from "@mui/material";
-import PlantMap from "../components/Map/index";
+import dynamic from "next/dynamic";
+
+const PlantMap = dynamic(() => import("../components/Map/index"), {
+  ssr: false,
+});
 
 export interface MapProps {
   data: Map<number, PlantEncounter>;
 }
 
 export default function Map({ data }: MapProps) {
-  return (
-    <NoSsr>
-      <PlantMap data={data} />
-    </NoSsr>
-  );
+  return <PlantMap data={data} />;
 }
