@@ -19,12 +19,15 @@ const theme = createTheme({
       main: "#faebd7",
     },
     background: {
-      paper: "#fff8e1",
+      paper: "antiquewhite",
       default: "#91A091",
     },
     error: {
       main: "rgb(112, 101, 112)",
     },
+  },
+  typography: {
+    fontFamily: "Baskerville",
   },
 });
 

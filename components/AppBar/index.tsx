@@ -5,6 +5,10 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
+import MapIcon from "@mui/icons-material/Map";
+import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
+import AddIcon from "@mui/icons-material/Add";
+import { Link } from "@mui/material";
 
 export default function HeaderAppBar() {
   return (
@@ -15,15 +19,34 @@ export default function HeaderAppBar() {
             size="large"
             edge="start"
             color="inherit"
-            aria-label="menu"
+            aria-label="map"
+            href="/"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+            <MapIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            News
-          </Typography>
-          <Button color="inherit">Login</Button>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="grid"
+            href="/grid"
+            sx={{ mr: 2 }}
+          >
+            <GridViewRoundedIcon />
+          </IconButton>
+          <Link
+            href={"/"}
+            variant="h5"
+            flexGrow={1}
+            color={"inherit"}
+            underline={"none"}
+          >
+            Flower Watch
+          </Link>
+          <IconButton color="inherit" aria-label="add">
+            <AddIcon />
+          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>

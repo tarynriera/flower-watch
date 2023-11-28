@@ -35,23 +35,25 @@ export default function GridView({ data }: GridProps) {
       {gridData.map((entry, index) => (
         <Grid xs={4} sm={4} md={3} lg={3} key={index}>
           <Link href={`/detail/${entry.id}`}>
-            <Item
+            <Card
               sx={{
                 maxWidth: 260,
                 maxHeight: 350,
                 minHeight: 240,
                 minWidth: 215,
                 flexShrink: 1,
+                textAlign: "center",
+                margin: "auto",
               }}
             >
               <CardMedia sx={{ height: 260 }} image={entry.imgURL} />
               <CardContent>
                 <Typography variant="h6">{entry.commonName}</Typography>
-                <Typography variant="body2" fontStyle={"italic"}>
+                <Typography variant="body1" fontStyle={"italic"}>
                   {entry.genus} {entry.species}
                 </Typography>
               </CardContent>
-            </Item>
+            </Card>
           </Link>
         </Grid>
       ))}
