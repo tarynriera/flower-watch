@@ -17,7 +17,7 @@ export default function Home({ data }: HomeProps) {
         <title>Flower Watch</title>
         <meta name="description" content="An app to track plants" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico\" />
+        <link rel="icon" href="/favicon.svg\" />
       </Head>
       <Map data={data} />
     </>

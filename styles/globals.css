@@ -1,104 +1,12 @@
 body {
   background-color: rgb(145, 160, 145);
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: "Baskerville", Georgia, "Times New Roman", Times, serif;
   margin-top: 3rem;
   margin-bottom: 3rem;
   margin-left: 10%;
   margin-right: 10%;
 }
 
-header img {
-  width: 50%;
-  height: auto;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-nav ul {
-  list-style: none;
-  text-align: center;
-}
-
-nav li {
-  display: inline-block;
-  border: 5px solid rgb(134, 147, 134);
-  padding: 3px;
-  margin: 3px;
-  border-radius: 12px;
-  background-color: rgb(134, 147, 134);
-  color: antiquewhite;
-}
-
-nav li:hover {
-  background-color: rgb(87, 97, 87);
-  border: 5px solid rgb(87, 97, 87);
-}
-
-h1 {
-  color: antiquewhite;
-  font-size: 1.5rem;
-}
-
-h2 {
-  text-align: center;
-}
-
 a {
   color: antiquewhite;
-}
-
-section {
-  display: flex;
-}
-
-article {
-  flex: 1;
-}
-
-#promo {
-  color: antiquewhite;
-  padding: 2rem;
-  background-image: url(https://static.wixstatic.com/media/84c3bf_c708d8518575492da33a02b3391f3d01~mv2.jpg/v1/fill/w_1115,h_937,al_c,q_85,enc_auto/84c3bf_c708d8518575492da33a02b3391f3d01~mv2.jpg);
-  background-position: center;
-  background-size: cover;
-  border-radius: 12px;
-}
-
-.card {
-  background-color: rgb(134, 147, 134);
-  border-radius: 12px;
-  padding: 1rem;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-}
-
-#leftcard {
-  margin-right: 1rem;
-}
-
-#rightcard {
-  margin-left: 1rem;
-}
-
-article img {
-  width: 100%;
-  height: auto;
-}
-
-footer {
-  display: flex;
-}
-
-footer div {
-  flex: 1;
-}
-
-footer img {
-  width: 3rem;
-  height: auto;
-}
-
-#copyright {
-  text-align: right;
 }

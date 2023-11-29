@@ -1,5 +1,3 @@
-import Header from "./header";
-import BottomNav from "./bottomNav";
 import { PropsWithChildren } from "react";
 import { PlantEncounter } from "../common/types";
 import HeaderAppBar from "@/components/AppBar";
@@ -16,7 +14,6 @@ export default function Layout({
     <>
       <HeaderAppBar handleAddEncounter={handleAddEncounter} />
       <main>{children}</main>
-      <BottomNav handleAddEncounter={handleAddEncounter} />
     </>
   );
 }
