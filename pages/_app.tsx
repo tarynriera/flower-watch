@@ -6,8 +6,8 @@ import { useState, useEffect } from "react";
 import Edit from "./edit";
 import { db } from "@/common/db";
 import { useLiveQuery } from "dexie-react-hooks";
-import { GridRowId } from "@mui/x-data-grid";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { useRouter } from "next/router";
 
 const theme = createTheme({
   palette: {
@@ -44,6 +44,8 @@ export default function App({ Component, pageProps }: AppProps) {
 
   //fetch data from indexedDB
   const plants_array = useLiveQuery(() => db.plants.toArray());
+
+  const router = useRouter();
 
   useEffect(() => {
     //generate new URLs for saved images
@@ -104,7 +106,8 @@ export default function App({ Component, pageProps }: AppProps) {
   }
 
   //handler for deleting items from indexedDB
-  async function deletePlant(id: GridRowId) {
+  async function deletePlant(id: number) {
+    router.push("/grid");
     await db.plants.delete(id);
   }
 

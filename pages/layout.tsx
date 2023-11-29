@@ -14,7 +14,7 @@ export default function Layout({
 }: LayoutPropsWithChildren) {
   return (
     <>
-      <HeaderAppBar />
+      <HeaderAppBar handleAddEncounter={handleAddEncounter} />
       <main>{children}</main>
       <BottomNav handleAddEncounter={handleAddEncounter} />
     </>

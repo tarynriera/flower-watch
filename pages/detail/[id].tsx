@@ -20,12 +20,31 @@ const DetailMap = dynamic(() => import("../../components/DetailMap/index"), {
 export interface DetailProps {
   data: Map<number, PlantEncounter>;
   handleEditOpen: (entryToEdit: PlantEncounter) => void;
+  handleSetData: (data: Map<number, PlantEncounter>) => void;
+  deletePlant: (id: number) => void;
 }
 
-export default function Detail({ data }: DetailProps) {
+export default function Detail({
+  data,
+  handleEditOpen,
+  handleSetData,
+  deletePlant,
+}: DetailProps) {
   const router = useRouter();
   const id = Number(router.query.id);
   const entry = data.get(id);
+
+  const handleDeleteClick = (id: number) => () => {
+    data.delete(id);
+    handleSetData(data);
+    deletePlant(id);
+  };
+
+  const handleEditClick = (id: number) => () => {
+    const entryToEdit = data.get(id);
+    entryToEdit ? handleEditOpen(entryToEdit) : null;
+  };
+
   if (entry != undefined) {
     return (
       <Grid
@@ -53,10 +72,18 @@ export default function Detail({ data }: DetailProps) {
               </Typography>
             </CardContent>
             <CardActions>
-              <IconButton size="small" color="primary">
+              <IconButton
+                size="small"
+                color="primary"
+                onClick={handleEditClick(entry.id)}
+              >
                 <EditIcon />
               </IconButton>
-              <IconButton size="small" color="primary">
+              <IconButton
+                size="small"
+                color="primary"
+                onClick={handleDeleteClick(entry.id)}
+              >
                 <DeleteIcon />
               </IconButton>
             </CardActions>
