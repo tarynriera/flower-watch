@@ -1,11 +1,10 @@
 import { PlantEncounter } from "@/common/types";
 import {
-  Button,
   Card,
-  CardActionArea,
   CardActions,
   CardContent,
   CardMedia,
+  IconButton,
   Typography,
 } from "@mui/material";
 import Grid from "@mui/material/Unstable_Grid2";
@@ -40,16 +39,13 @@ export default function Detail({ data }: DetailProps) {
         <Grid xs={4} sm={4} md={6} lg={6}>
           <Card
             sx={{
-              //maxWidth: 500,
-              //maxHeight: 500,
-              minHeight: 240,
-              minWidth: 215,
-              flexShrink: 1,
+              justifySelf: "stretch",
+              //flexGrow: 0,
               textAlign: "center",
               margin: "auto",
             }}
           >
-            <CardMedia sx={{ height: 260 }} image={entry?.imgURL} />
+            <CardMedia sx={{ height: 365 }} image={entry?.imgURL} />
             <CardContent>
               <Typography variant="h6">{entry.commonName}</Typography>
               <Typography variant="body2" fontStyle={"italic"}>
@@ -57,12 +53,12 @@ export default function Detail({ data }: DetailProps) {
               </Typography>
             </CardContent>
             <CardActions>
-              <Button size="small" variant="text" startIcon={<EditIcon />}>
-                Edit
-              </Button>
-              <Button size="small" variant="text" startIcon={<DeleteIcon />}>
-                Delete
-              </Button>
+              <IconButton size="small" color="primary">
+                <EditIcon />
+              </IconButton>
+              <IconButton size="small" color="primary">
+                <DeleteIcon />
+              </IconButton>
             </CardActions>
           </Card>
         </Grid>

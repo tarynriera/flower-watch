@@ -30,13 +30,13 @@ export default function PlantMap({ data }: PlantMapProps) {
     <MapContainer
       center={[39.953483394223255, -75.16256915174992]}
       zoom={13}
-      scrollWheelZoom={false}
+      scrollWheelZoom={true}
       style={{
         height: "600px",
-        width: "700px",
+        width: "1140px",
         marginLeft: "auto",
         marginRight: "auto",
-        marginBottom: "2rem",
+        marginTop: "24px",
       }}
     >
       <TileLayer

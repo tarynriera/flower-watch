@@ -12,8 +12,8 @@ export default function DetailMap({ entry }: DetailMapProps) {
       zoom={16}
       scrollWheelZoom={false}
       style={{
-        height: "500px",
-        width: "500px",
+        height: "100%",
+        width: "auto",
         marginLeft: "auto",
         marginRight: "auto",
         marginBottom: "2rem",

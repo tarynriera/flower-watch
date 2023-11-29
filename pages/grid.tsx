@@ -1,18 +1,8 @@
 import Grid from "@mui/material/Unstable_Grid2";
 import { Card, CardContent, Typography } from "@mui/material";
-import { experimentalStyled as styled } from "@mui/material/styles";
 import { PlantEncounter } from "@/common/types";
 import CardMedia from "@mui/material/CardMedia";
 import Link from "next/link";
-
-const Item = styled(Card)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  //padding: theme.spacing(2),
-  textAlign: "center",
-  color: theme.palette.text.secondary,
-  margin: "auto",
-}));
 
 export interface GridProps {
   data: Map<number, PlantEncounter>;
