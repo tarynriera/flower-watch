@@ -8,6 +8,7 @@ const nextConfig = {
   output: "export",
   distDir: "out",
   reactStrictMode: true,
+  optimizeFont: false,
 };
 
 module.exports = nextConfig;
