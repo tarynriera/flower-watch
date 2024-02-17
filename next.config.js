@@ -1,5 +1,4 @@
-const basePathValue =
-  process.env.NODE_ENV === "production" ? "/flower-watch" : "";
+const basePathValue = "/flower-watch";
 
 const nextConfig = {
   basePath: basePathValue,
