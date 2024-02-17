@@ -1,9 +1,10 @@
 /** @type {import('next').NextConfig} */
-const basePath = process.env.NODE_ENV === "production" ? "/flower-watch" : "";
+const basePathValue =
+  process.env.NODE_ENV === "production" ? "/flower-watch" : "";
 
 const nextConfig = {
-  basePath,
-  assetPrefix: `${basePath}/`,
+  basePath: basePathValue,
+  assetPrefix: `${basePathValue}/`,
   output: "export",
   distDir: "out",
   reactStrictMode: true,
