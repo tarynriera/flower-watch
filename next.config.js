@@ -1,10 +1,6 @@
-const basePathValue = "/flower-watch";
-
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  basePath: basePathValue,
-  assetPrefix: `${basePathValue}/`,
   output: "export",
-  optimizeFonts: false,
   reactStrictMode: true,
 };
 
