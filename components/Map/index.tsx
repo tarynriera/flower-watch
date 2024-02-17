@@ -10,7 +10,7 @@ export default function PlantMap({ data }: PlantMapProps) {
   const markerData = Array.from(data.values());
   const markers = markerData.map((marker) => {
     return (
-      <Marker position={[marker.lat, marker.long]}>
+      <Marker key={marker.id} position={[marker.lat, marker.long]}>
         <Popup>
           <img
             src={marker.imgURL}
