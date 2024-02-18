@@ -5,10 +5,12 @@ import IconButton from "@mui/material/IconButton";
 import MapIcon from "@mui/icons-material/Map";
 import GridViewRoundedIcon from "@mui/icons-material/GridViewRounded";
 import AddIcon from "@mui/icons-material/Add";
-import { Link } from "@mui/material";
+import { Link as MuiLink } from "@mui/material";
 import Add from "@/pages/add";
 import { PlantEncounter } from "@/common/types";
 import React from "react";
+import { LinkOffTwoTone } from "@mui/icons-material";
+import Link from "next/link";
 
 export interface AppBarProps {
   handleAddEncounter: (newEncounter: PlantEncounter) => void;
@@ -35,6 +37,7 @@ export default function HeaderAppBar({ handleAddEncounter }: AppBarProps) {
             color="inherit"
             aria-label="map"
             href="/"
+            LinkComponent={Link}
             sx={{ mr: 2 }}
           >
             <MapIcon />
@@ -45,19 +48,21 @@ export default function HeaderAppBar({ handleAddEncounter }: AppBarProps) {
             color="inherit"
             aria-label="grid"
             href="/grid"
+            LinkComponent={Link}
             sx={{ mr: 2 }}
           >
             <GridViewRoundedIcon />
           </IconButton>
-          <Link
-            href={"/"}
+          <MuiLink
+            href="/"
             variant="h5"
             flexGrow={1}
             color={"inherit"}
             underline={"none"}
+            component={Link}
           >
             Flower Watch
-          </Link>
+          </MuiLink>
           <IconButton
             color="inherit"
             aria-label="add"
