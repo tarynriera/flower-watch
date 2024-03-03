@@ -11,8 +11,8 @@ export interface PlantEncounter {
 }
 
 const EMPTY_DATA_ID = 0;
-const DEFAULT_LAT = 0;
-const DEFAULT_LONG = 0;
+export const DEFAULT_LAT = 0;
+export const DEFAULT_LONG = 0;
 
 export const emptyPlantData = {
   id: EMPTY_DATA_ID,

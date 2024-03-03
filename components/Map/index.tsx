@@ -1,6 +1,7 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { PlantEncounter } from "@/common/types";
 import Link from "next/link";
+import L from "leaflet";
 
 export interface PlantMapProps {
   data: Map<number, PlantEncounter>;
@@ -26,9 +27,16 @@ export default function PlantMap({ data }: PlantMapProps) {
       </Marker>
     );
   });
+
+  const bounds = L.latLngBounds(markerData.map((x) => [x.lat, x.long]));
+
   return (
     <MapContainer
-      center={[39.953483394223255, -75.16256915174992]}
+      center={
+        bounds.isValid() ? undefined : [39.953483394223255, -75.16256915174992]
+      }
+      bounds={bounds.isValid() ? bounds : undefined}
+      boundsOptions={{ padding: [20, 20] }}
       zoom={13}
       scrollWheelZoom={true}
       style={{

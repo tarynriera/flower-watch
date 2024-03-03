@@ -5,7 +5,12 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
-import { PlantEncounter, emptyPlantData } from "../common/types";
+import {
+  PlantEncounter,
+  emptyPlantData,
+  DEFAULT_LAT,
+  DEFAULT_LONG,
+} from "../common/types";
 import { useState } from "react";
 import hash from "hash-it";
 import { ExpandedTags } from "exifreader";
@@ -51,7 +56,7 @@ export default function Add(props: AddProps) {
     } else if (
       // check for location data either from image or form if not present
       locationData === null &&
-      (formData.lat === null || formData.long === null)
+      (formData.lat === DEFAULT_LAT || formData.long === DEFAULT_LONG)
     ) {
       setLocationError(true);
     } else {
