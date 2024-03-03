@@ -8,6 +8,7 @@ import { db } from "@/common/db";
 import { useLiveQuery } from "dexie-react-hooks";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
+import magnolia from "../public/starMagnolia.jpg";
 
 const theme = createTheme({
   palette: {
@@ -31,6 +32,19 @@ const theme = createTheme({
   },
 });
 
+const demoData = [
+  {
+    id: 69420323,
+    genus: "Magnolia",
+    species: "stellata",
+    commonName: "star magnolia",
+    notes: "spring bloom",
+    lat: 39.946864,
+    long: -75.209865,
+    imgURL: magnolia.src,
+  },
+];
+
 export default function App({ Component, pageProps }: AppProps) {
   //a map state that stores all entries
   const [data, setData] = useState<Map<number, PlantEncounter>>(new Map());
@@ -41,6 +55,10 @@ export default function App({ Component, pageProps }: AppProps) {
     useState<PlantEncounter>(emptyPlantData);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
+
+  if (useLiveQuery(() => db.plants.toArray())?.length === 0) {
+    demoData.forEach((demoEncounter) => addPlant(demoEncounter));
+  }
 
   //fetch data from indexedDB
   const plants_array = useLiveQuery(() => db.plants.toArray());
