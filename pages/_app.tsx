@@ -46,28 +46,33 @@ const demoData = [
 ];
 
 export default function App({ Component, pageProps }: AppProps) {
-  //a map state that stores all entries
+  // a map state that stores all entries
   const [data, setData] = useState<Map<number, PlantEncounter>>(new Map());
-  //open state for the edit form
+  // open state for the edit form
   const [open, setOpen] = useState(false);
-  //state that holds the entry currently being edited
+  // state that holds the entry currently being edited
   const [entryToEdit, setEntryToEdit] =
     useState<PlantEncounter>(emptyPlantData);
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  if (useLiveQuery(() => db.plants.toArray())?.length === 0) {
-    demoData.forEach((demoEncounter) => addPlant(demoEncounter));
-  }
+  //query for existing data, if none add demo entries
+  const existingData = useLiveQuery(() => db.plants.toArray());
 
-  //fetch data from indexedDB
+  useEffect(() => {
+    if (existingData && existingData.length === 0) {
+      demoData.forEach((demoEncounter) => addPlant(demoEncounter));
+    }
+  }, [existingData]);
+
+  // fetch data from indexedDB
   const plants_array = useLiveQuery(() => db.plants.toArray());
 
   const router = useRouter();
 
   useEffect(() => {
-    //generate new URLs for saved images
-    if (!isDataLoaded && plants_array) {
+    // generate new URLs for saved images
+    if (!isDataLoaded && plants_array && plants_array.length > 0) {
       const plants_array_with_URLs = plants_array?.map((encounter) => {
         if (encounter.imgBlob) {
           const imgURL = URL.createObjectURL(encounter.imgBlob);
@@ -84,7 +89,7 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }, [plants_array]);
 
-  //handlers for opening and closing edit form
+  // handlers for opening and closing edit form
   const handleEditOpen = (entry: PlantEncounter) => {
     setEntryToEdit(entry);
     setOpen(true);
@@ -101,7 +106,7 @@ export default function App({ Component, pageProps }: AppProps) {
     setOpen(false);
   };
 
-  //handlers for adding to data state
+  // handlers for adding to data state
   const handleAddEncounter = (newEncounter: PlantEncounter) => {
     data.set(newEncounter.id, newEncounter);
     handleSetData(data);
@@ -123,13 +128,13 @@ export default function App({ Component, pageProps }: AppProps) {
     }
   }
 
-  //handler for deleting items from indexedDB
+  // handler for deleting items from indexedDB
   async function deletePlant(id: number) {
     router.push("/grid");
     await db.plants.delete(id);
   }
 
-  //handler for editing items in indexedDB
+  // handler for editing items in indexedDB
   async function editPlant(encounter: PlantEncounter) {
     await db.plants.put(encounter);
   }
