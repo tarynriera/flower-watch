@@ -9,6 +9,13 @@ import { useLiveQuery } from "dexie-react-hooks";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import { useRouter } from "next/router";
 import magnolia from "../public/starMagnolia.jpg";
+import andromeda from "../public/japaneseAdromeda.jpg";
+import starflower from "../public/starflower.jpg";
+import bleedingheart from "../public/bleedingheart.jpg";
+import scotchbroom from "../public/scotchbroom.jpg";
+import astilbe from "../public/astilbe.jpg";
+import lilac from "../public/lilac.jpg";
+import cat from "../public/cat.jpg";
 
 const theme = createTheme({
   palette: {
@@ -38,10 +45,85 @@ const demoData = [
     genus: "Magnolia",
     species: "stellata",
     commonName: "star magnolia",
-    notes: "spring bloom",
+    notes: "Early spring blooms, come in pink or white",
     lat: 39.946864,
     long: -75.209865,
     imgURL: magnolia.src,
+  },
+  {
+    id: 694203231,
+    genus: "Pieris",
+    species: "japonica",
+    commonName: "japanese andromeda",
+    notes:
+      "Evergreen shrub native to east Asia, produces bell-shaped blooms in early spring",
+    lat: 39.9471,
+    long: -75.20117,
+    imgURL: andromeda.src,
+  },
+  {
+    id: 694203232,
+    genus: "Ipheion",
+    species: "uniflorum",
+    commonName: "spring starflower",
+    notes:
+      "Perennial bulb related to aliums, foliage has an onion-like scene when crushed",
+    lat: 39.95168,
+    long: -75.2156,
+    imgURL: starflower.src,
+  },
+  {
+    id: 694203233,
+    genus: "Lamprocapnos",
+    species: "spectabilis",
+    commonName: "bleeding heart",
+    notes:
+      "Rhizomatous perennial with heart shaped flowers, formerly categorized under the genus Dicentra",
+    lat: 39.94637,
+    long: -75.20326,
+    imgURL: bleedingheart.src,
+  },
+  {
+    id: 694203234,
+    genus: "Cytisus",
+    species: "scoparius",
+    commonName: "scotch broom",
+    notes:
+      "Considered invasive in some parts of North America, ornamental cultivars like this are sometimes used in gardens",
+    lat: 39.95904,
+    long: -75.20337,
+    imgURL: scotchbroom.src,
+  },
+  {
+    id: 694203235,
+    genus: "Astilbe",
+    species: "sp.",
+    commonName: "astilbe",
+    notes:
+      "A summer bloom with unique feathery flowers, exact species and cultivar not known",
+    lat: 39.95151,
+    long: -75.20884,
+    imgURL: astilbe.src,
+  },
+  {
+    id: 694203236,
+    genus: "Syringa",
+    species: "vulgaris",
+    commonName: "lilac",
+    notes: "Spring bloom known for its scented flowers",
+    lat: 39.95178,
+    long: -75.21148,
+    imgURL: lilac.src,
+  },
+  {
+    id: 694203237,
+    genus: "Felis",
+    species: "catus",
+    commonName: "cat",
+    notes: "A friendly street cat photographed in front of a Datura shrub",
+    lat: 39.95096,
+    long: -75.2111,
+    imgURL: cat.src,
   },
 ];
 
@@ -56,7 +138,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
-  //query for existing data, if none add demo entries
+  // query for existing data, if none add demo entries
   const existingData = useLiveQuery(() => db.plants.toArray());
 
   useEffect(() => {
@@ -122,7 +204,6 @@ export default function App({ Component, pageProps }: AppProps) {
   async function addPlant(encounter: PlantEncounter) {
     try {
       const id = await db.plants.add(encounter);
-      console.log("Added plant");
     } catch (error) {
       console.log(error);
     }
